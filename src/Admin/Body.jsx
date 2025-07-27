@@ -30,12 +30,7 @@ const Body = () => {
             </div>
             
         </div>
-        <div className='min-h-80 '>
-            <div className='grid grid-cols-10 gap-4 '>
-                
-    
-            </div>
-         </div>
+        
           
 
         
