@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <>
-      <div className='w-full min-h-screen bg-[#222833] flex flex-col border-2 border-e-blue-200 '>
+      <div className='w-full h-full bg-[#222833] flex flex-col border-2 border-e-blue-200'>
           {/* Sidebar Top */}
           <div className='w-full bg-[#8A784E] border-b-2 border-b-amber-950 rounded-b-lg'>
               <img src={Logo} alt={Logo} width={100} height={100} className=' rounded-2xl mx-auto mt-6 border-2 border-amber-900 hover:border-2 hover:border-amber-950  hover:scale-110 transition-all duration-500 ease-in '></img>
