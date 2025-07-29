@@ -28,31 +28,42 @@ const Body = () => {
   const[completedCount,setCompletedCount]=useState(100)
   const[pendingCount,setPendingCount]=useState(0)
 
+
+
   return (
     <>
-      <div className='w-full min-h-screen bg-slate-900'>
+      <div className='w-full min-h-screen bg-slate-950'>
 
         {/* HEADER PART */}
-        <div className='w-full h-20 flex justify-end bg-[#222831] shadow-lg shadow-gray-900 border-0 border-[#222831] hover:scale-y-105 rounded-b-[10px] transition-all duration-300 ease-in'>
+        <div className='w-full h-20 flex flex-row justify-end bg-[#222831] shadow-lg shadow-[#97B067] border-2 border-[#97B067] rounded-b-[10px]'>
 
           {/* <NavLink to={''} className=' h-7  text-[15px] text-gray-300 mt-5 my-3 mr-10 px-4 pt-1 border-0 border-[#222831] rounded-full shadow-lg shadow-gray-900'><i className='fas fa-bell mr-2 text-gray-300'></i> Notifications</NavLink>
           <NavLink to={''} className=' h-7  text-[15px] text-gray-300 mt-5 my-3 mr-30 px-4 pt-1 border-0 border-[#222831] rounded-full shadow-lg shadow-gray-900'><i className='fas fa-user mr-2 text-gray-300'></i> User Profile</NavLink> */}
           <button className='h-7  text-[15px] text-gray-300 mt-5 my-3 mr-5 px-4 pt-1 hover:scale-110'><i className='fas fa-bell mr-2 text-gray-300'></i></button>
-          <button className='h-7  text-[15px] text-gray-300 mt-5 my-3 mr-30 pl-4 pr-4 pb-1 pt-1 bg-slate-900 rounded-full border-2 border-slate-900 hover:border-white '><i className='fas fa-user mr-2 text-gray-300'></i> User Profile</button>
+          <button className="h-10 w-36 text-[15px] text-amber-100 font-semibold mt-4 mr-20 bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in"><i className="fas fa-user mr-2.5"></i>User Profile</button>
         </div>
 
-        <h1 className='text-[30px] text-gray-300 mt-10 mx-7 font-semibold'><i className='fas fa-home mr-2'></i> Dashboard</h1>
+        <h1 className=' text-[30px] text-gray-300 mt-10 mx-7 font-semibold'><i className='fas fa-home mr-2'></i> Dashboard</h1>
 
         {/* BODY PART */}
 
         <div className='grid grid-cols-12 m-0 p-0 gap-5'>
 
-          <div className='col-span-4 h-48 bg-[#222831] shadow-lg shadow-amber-300 mt-15 ml-5 border-2 border-[#222831]  rounded-[8px] rounded-bl-none hover:border-amber-300 hover:scale-105 transition-all duration-300 ease-in'>
-            <p className=' text-left text-yellow-500 mt-4 ml-4 text-[18px] font-semibold'>Total Patients : {completedCount}</p>
+          <div className='col-span-4 h-48 bg-[#222831] shadow-lg shadow-amber-300 mt-15 ml-5 border-2 border-[#222831]  rounded-[8px] rounded-bl-[5px] hover:border-amber-300 hover:scale-105 transition-all duration-300 ease-in'>
+            <p className=' text-left text-yellow-500 mt-4 ml-4 text-[22px] font-semibold'>Total Patients : {completedCount}</p>
+            <div className=' flex flex-row p-0 mt-7 gap-4'>  
+              <p className="text-amber-500 text-[18px] mt-3 ml-4">Completed : {completedCount} </p>
+              <button onClick={()=> setCompletedCount(completedCount+1)} ><i className="fas fa-plus text-green-500 text-[12px] mt-4"></i></button>
+
+              
+              <p className="text-amber-500 text-[18px] mt-3">Pending : {pendingCount} </p>
+              <button onClick={()=> setPendingCount(pendingCount+1)} ><i className="fas fa-plus text-green-500 text-[12px] mt-4"></i></button>
+              <button onClick={()=> setPendingCount(pendingCount-1)} ><i className="fas fa-minus text-red-500 text-[12px] mt-4"></i></button>
+            </div>
 
           </div>
-          <div className='col-span-4 h-48 flex flex-col bg-[#222831] shadow-lg shadow-purple-600 mt-15 border-2 border-[#222831]  rounded-[8px] rounded-bl-none hover:scale-105 hover:border-purple-500 transition-all duration-300 ease-in'>
-            <p className=' text-left text-purple-500 mt-4 ml-4 text-[18px]'>New Patients</p>
+          <div className='col-span-4 h-48 flex flex-col bg-[#222831] shadow-lg shadow-purple-600 mt-15 border-2 border-[#222831]  rounded-[8px] rounded-bl-[5px] hover:scale-105 hover:border-purple-500 transition-all duration-300 ease-in'>
+            <p className=' text-left text-purple-500 mt-4 ml-4 text-[20px] font-semibold'><i className="fas fa-users ml-1 mr-2.5"></i>New Patients</p>
 
             <div className="flex-1"> {/* Adjust this value as needed */}
               <CustomChart
@@ -64,8 +75,8 @@ const Body = () => {
               />
             </div>
           </div>
-          <div className='col-span-4 h-48 flex flex-col bg-[#222831] shadow-lg shadow-green-700 mt-15 mr-5 border-2 border-[#222831]  rounded-[8px] rounded-bl-none hover:scale-105 hover:border-green-400 transition-all duration-300 ease-in'>
-            <p className=' text-left text-green-400 mt-2 ml-4 text-[18px]'>Earnings</p>
+          <div className='col-span-4 h-48 flex flex-col bg-[#222831] shadow-lg shadow-green-700 mt-15 mr-5 border-2 border-[#222831]  rounded-[8px] rounded-bl-[5px] hover:scale-105 hover:border-green-400 transition-all duration-300 ease-in'>
+            <p className=' text-left text-green-400 mt-2 ml-4 text-[20px] font-semibold'><i className="fas fa-hand-holding-usd mr-2 ml-1"></i>Earnings</p>
             <div className="flex-1">
               <CustomChart
                 data={chartData}
@@ -75,18 +86,17 @@ const Body = () => {
                 ylabel="Earnings"
               />
             </div>
-
           </div>
         </div>
 
 
         <div className=' grid grid-cols-12 p-0 m-0 gap-4'>
           <div className='col-span-6 h-80 bg-[#222831] shadow-lg shadow-cyan-500 ml-5 mr-2 mt-12 border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-cyan-500 transition-all duration-300 ease-in'>
-            <p className=' text-cyan-300 mt-4 ml-4 text-[18px]'>Doctor Status</p>
+            <p className=' text-cyan-300 mt-4 ml-4 text-[20px] font-semibold'><i className="fas fa-user-nurse mr-2.5 ml-1"></i>Doctor Status</p>
           </div>
 
           <div className='col-span-6 h-80 flex flex-col bg-[#222831] shadow-lg shadow-[#FF7D29] mt-12 mr-5 border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-[#FF7D29] transition-all duration-300 ease-in'>
-            <p className='  text-orange-400 mt-4 ml-4 text-[18px]'>Revenue</p>
+            <p className='  text-orange-400 mt-4 ml-4 text-[20px] font-semibold'><i className="fas fa-dollar-sign mr-2.5 ml-1"></i>Revenue</p>
             <div className="flex-1">
 
             </div>
@@ -97,19 +107,17 @@ const Body = () => {
               xkey="date"
               ylabel="Revenue"
             />
-
-
           </div>
         </div>
 
         <div className='grid grid-cols-12 p-0 m-0 gap-4'>
 
           <div className='col-span-8 h-96 bg-[#222831] shadow-lg shadow-[#DC2525] ml-5 mt-12 mb-10 mr-3 border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-[#DC2525] transition-all duration-300 ease-in'>
-            <p className='text-[18px] text-[#FF3F33] ml-4 mt-4 '>Appointment List</p>
+            <p className='text-[20px] text-[#FF3F33] ml-4 mt-4 font-semibold'><i className="fas fa-calendar-alt mr-2.5 ml-1"></i>Appointment List</p>
           </div>
 
           <div className='col-span-4 h-96 flex flex-col bg-[#222831] shadow-lg shadow-[#FFF9AF] mr-5 mt-12 mb-10  border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-[#FFFDB7] transition-all duration-300 ease-in'>
-            <p className='text-[18px] text-[#F6F6F6] ml-4 mt-4'>Lab & Analytics</p>
+            <p className='text-[20px] text-[#F6F6F6] ml-4 mt-4 font-semibold'><i className="fas fa-microscope mr-2.5 ml-1"></i>Lab & Analytics</p>
             <div className="flex-1">
               <CustomChart
                 data={chartData}
@@ -119,10 +127,8 @@ const Body = () => {
                 ylabel="Lab Analytics"
               />
             </div>
-
           </div>
         </div>
-
       </div>
     </>
   )

@@ -18,6 +18,7 @@ const CustomChart = ({ data, areaKey, areaColor, xkey, ylabel}) => {
                             dataKey={areaKey}
                             stroke={areaColor}
                             fill={areaColor}
+                            fillOpacity={0.3}
                             strokeWidth={2}
                         />
                     </AreaChart>
