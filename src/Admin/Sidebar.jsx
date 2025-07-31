@@ -1,7 +1,8 @@
 import React from 'react';
 import Logo from '../assets/ChatGPT Image Jul 28, 2025, 07_48_37 PM.png'
 import { NavLink } from 'react-router-dom';
-
+import DoctorDashboard from './DoctorsDetails/DoctorDashboard'; 
+import PatientRecords from './DoctorsDetails/PatientRecords';
 
 const Sidebar = () => {
   return (
@@ -16,9 +17,9 @@ const Sidebar = () => {
           <div className='w-full flex-1 p-0 m-0 overflow-y-auto'>
 
               <nav className='  h-lvh flex flex-col p-0 mt-7 gap-5'>
-                <NavLink to={''} id='active' className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2.5 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F]  hover:border-amber-100 transistion-all duration-300 ease-in hover:scale-110'><i className='fas fa-tachometer-alt m-2'></i> Dashboard </NavLink>
-                <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-user-md m-2'></i>Doctors Details <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
-                <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-notes-medical m-2'></i>Patient Records <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
+                <NavLink to={'/Admin'} id='active' className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2.5 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F]  hover:border-amber-100 transistion-all duration-300 ease-in hover:scale-110'><i className='fas fa-tachometer-alt m-2'></i> Dashboard </NavLink>
+                <NavLink to={'/admin/DoctorDashboard'} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-user-md m-2'></i>Doctors Details <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
+                <NavLink to={'/admin/PatientRecords'} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-notes-medical m-2'></i>Patient Records <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
                 <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-1 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-calendar-check mr-1'></i>Appointments Scheduling  <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
                 <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-file-medical m-2' ></i>Prescriptions Oversight <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
                 <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-vial m-2' ></i>Lab Management   <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
