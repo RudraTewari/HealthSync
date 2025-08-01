@@ -2,6 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import CustomChart from './CustomChart';
 import { useState } from 'react';
+import CustomDocStatus from './CustomDocStatus';
+import CustomAppointment from './CustomAppointment';
 
 const chartData = [
   { date: '2025-07-01', newPatients: 5, earnings: 1000, Revenue: 1200, Tests: 20 },
@@ -21,18 +23,57 @@ const chartData = [
   { date: '2025-07-15', newPatients: 30, earnings: 1600, Revenue: 1800, Tests: 67 }
 ];
 
+const doctorsData = [
+  { name: 'Dr. Aisha Verma', patients: 15, DocStatus: 'Active' },
+  { name: 'Dr. Rohan Malhotra', patients: 8, DocStatus: 'Inactive' },
+  { name: 'Dr. Kavita Sharma', patients: 20, DocStatus: 'Active' },
+  { name: 'Dr. Aryan Joshi', patients: 13, DocStatus: 'Active' },
+  { name: 'Dr. Sneha Kapoor', patients: 5, DocStatus: 'Inactive' },
+  { name: 'Dr. Deepak Mishra', patients: 17, DocStatus: 'Active' },
+  { name: 'Dr. Neha Patil', patients: 10, DocStatus: 'Active' },
+  { name: 'Dr. Akash Mehra', patients: 7, DocStatus: 'Inactive' },
+  { name: 'Dr. Priya Nair', patients: 22, DocStatus: 'Active' },
+  { name: 'Dr. Manish Thakur', patients: 12, DocStatus: 'Active' },
+];
+
+const appointmentsData = [
+  { patientName: 'Ananya Sharma', doctorName: 'Dr. Aisha Verma', date: '2025-08-01', time: '10:00 AM', status: 'Completed' },
+  { patientName: 'Rohan Mehta', doctorName: 'Dr. Rohan Malhotra', date: '2025-08-01', time: '11:15 AM', status: 'Pending' },
+  { patientName: 'Priya Nair', doctorName: 'Dr. Kavita Sharma', date: '2025-08-01', time: '01:30 PM', status: 'Completed' },
+  { patientName: 'Kabir Chauhan', doctorName: 'Dr. Aryan Joshi', date: '2025-08-02', time: '09:45 AM', status: 'Cancelled' },
+  { patientName: 'Divya Kapoor', doctorName: 'Dr. Sneha Kapoor', date: '2025-08-02', time: '02:00 PM', status: 'Completed' },
+  { patientName: 'Aditya Sen', doctorName: 'Dr. Deepak Mishra', date: '2025-08-03', time: '12:30 PM', status: 'Pending' },
+  { patientName: 'Meera Iyer', doctorName: 'Dr. Neha Patil', date: '2025-08-03', time: '03:15 PM', status: 'Completed' },
+  { patientName: 'Arjun Saxena', doctorName: 'Dr. Akash Mehra', date: '2025-08-04', time: '11:45 AM', status: 'Pending' },
+  { patientName: 'Ishita Bansal', doctorName: 'Dr. Priya Nair', date: '2025-08-04', time: '04:00 PM', status: 'Completed' },
+  { patientName: 'Vikram Rao', doctorName: 'Dr. Manish Thakur', date: '2025-08-05', time: '09:00 AM', status: 'Cancelled' },
+  { patientName: 'Nikhil Sinha', doctorName: 'Dr. Aisha Verma', date: '2025-08-05', time: '02:15 PM', status: 'Completed' },
+  { patientName: 'Tanvi Deshmukh', doctorName: 'Dr. Rohan Malhotra', date: '2025-08-06', time: '11:00 AM', status: 'Pending' },
+  { patientName: 'Rahul Khanna', doctorName: 'Dr. Kavita Sharma', date: '2025-08-06', time: '01:45 PM', status: 'Completed' },
+  { patientName: 'Sneha Tiwari', doctorName: 'Dr. Aryan Joshi', date: '2025-08-07', time: '10:30 AM', status: 'Completed' },
+  { patientName: 'Ishan Dubey', doctorName: 'Dr. Sneha Kapoor', date: '2025-08-07', time: '03:30 PM', status: 'Cancelled' },
+  { patientName: 'Simran Kaur', doctorName: 'Dr. Deepak Mishra', date: '2025-08-08', time: '12:00 PM', status: 'Pending' },
+  { patientName: 'Yash Garg', doctorName: 'Dr. Neha Patil', date: '2025-08-08', time: '04:00 PM', status: 'Completed' },
+  { patientName: 'Kritika Bhatnagar', doctorName: 'Dr. Akash Mehra', date: '2025-08-09', time: '10:45 AM', status: 'Completed' },
+  { patientName: 'Harsh Vardhan', doctorName: 'Dr. Priya Nair', date: '2025-08-09', time: '01:00 PM', status: 'Pending' },
+  { patientName: 'Tanya Rawat', doctorName: 'Dr. Manish Thakur', date: '2025-08-10', time: '03:00 PM', status: 'Completed' }
+];
+
+
+
+
 
 
 const Body = () => {
 
-  const[completedCount,setCompletedCount]=useState(100)
-  const[pendingCount,setPendingCount]=useState(0)
+  const [completedCount, setCompletedCount] = useState(100)
+  const [pendingCount, setPendingCount] = useState(0)
 
 
 
   return (
     <>
-      <div className='w-full min-h-screen bg-slate-950'>
+      <div className='w-full min-h-screen bg-[#0B192C]'>
 
         {/* HEADER PART */}
         <div className='w-full h-20 flex flex-row justify-end bg-[#222831] shadow-lg shadow-[#97B067] border-2 border-[#97B067] rounded-b-[10px]'>
@@ -51,14 +92,14 @@ const Body = () => {
 
           <div className='col-span-4 h-48 bg-[#222831] shadow-lg shadow-amber-300 mt-15 ml-5 border-2 border-[#222831]  rounded-[8px] rounded-bl-[5px] hover:border-amber-300 hover:scale-105 transition-all duration-300 ease-in'>
             <p className=' text-left text-yellow-500 mt-4 ml-4 text-[22px] font-semibold'>Total Patients : {completedCount}</p>
-            <div className=' flex flex-row p-0 mt-7 gap-4'>  
+            <div className=' flex flex-row p-0 mt-7 gap-4'>
               <p className="text-amber-500 text-[18px] mt-3 ml-4">Completed : {completedCount} </p>
-              <button onClick={()=> setCompletedCount(completedCount+1)} ><i className="fas fa-plus text-green-500 text-[12px] mt-4"></i></button>
+              <button onClick={() => setCompletedCount(completedCount + 1)} ><i className="fas fa-plus text-green-500 text-[12px] mt-4"></i></button>
 
-              
+
               <p className="text-amber-500 text-[18px] mt-3">Pending : {pendingCount} </p>
-              <button onClick={()=> setPendingCount(pendingCount+1)} ><i className="fas fa-plus text-green-500 text-[12px] mt-4"></i></button>
-              <button onClick={()=> setPendingCount(pendingCount-1)} ><i className="fas fa-minus text-red-500 text-[12px] mt-4"></i></button>
+              <button onClick={() => setPendingCount(pendingCount + 1)} ><i className="fas fa-plus text-green-500 text-[12px] mt-4"></i></button>
+              <button onClick={() => setPendingCount(pendingCount - 1)} ><i className="fas fa-minus text-red-500 text-[12px] mt-4"></i></button>
             </div>
 
           </div>
@@ -92,7 +133,29 @@ const Body = () => {
 
         <div className=' grid grid-cols-12 p-0 m-0 gap-4'>
           <div className='col-span-6 h-80 bg-[#222831] shadow-lg shadow-cyan-500 ml-5 mr-2 mt-12 border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-cyan-500 transition-all duration-300 ease-in'>
-            <p className=' text-cyan-300 mt-4 ml-4 text-[20px] font-semibold'><i className="fas fa-user-nurse mr-2.5 ml-1"></i>Doctor Status</p>
+
+            {/* Title */}
+            <p className='text-cyan-300 mt-4 ml-4 text-[20px] font-semibold'>
+              <i className="fas fa-user-nurse mr-2.5 ml-1"></i>Doctors Status
+            </p>
+
+            {/* Table Header Row */}
+            <div className="flex w-full justify-around text-cyan-400 font-bold text-lg border-b border-cyan-600 pb-2 mt-4  ">
+              <div className="w-1/3 text-center">Doctors Name</div>
+              <div className="w-1/3 text-center">Patients Checked</div>
+              <div className="w-1/3 text-center">Status</div>
+            </div>
+
+              <div className="overflow-y-auto max-h-[200px] w-full px-2">
+                {doctorsData.map((doc, index) => (
+                  <CustomDocStatus
+                    key={index}
+                    name={doc.name}
+                    patients={doc.patients}
+                    DocStatus={doc.DocStatus}
+                  />
+                ))}
+              </div>
           </div>
 
           <div className='col-span-6 h-80 flex flex-col bg-[#222831] shadow-lg shadow-[#FF7D29] mt-12 mr-5 border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-[#FF7D29] transition-all duration-300 ease-in'>
@@ -113,7 +176,29 @@ const Body = () => {
         <div className='grid grid-cols-12 p-0 m-0 gap-4'>
 
           <div className='col-span-8 h-96 bg-[#222831] shadow-lg shadow-[#DC2525] ml-5 mt-12 mb-10 mr-3 border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-[#DC2525] transition-all duration-300 ease-in'>
-            <p className='text-[20px] text-[#FF3F33] ml-4 mt-4 font-semibold'><i className="fas fa-calendar-alt mr-2.5 ml-1"></i>Appointment List</p>
+            <p className='text-[20px] text-[#e2180a] ml-4 mt-4 font-semibold'><i className="fas fa-calendar-alt mr-2.5 ml-1"></i>Appointment List</p>
+
+            <div className="flex w-full justify-around text-red-600 font-semibold border-b border-red-500 mt-4 ">
+                <div className="w-1/4 text-center">Patient Name</div>
+                <div className="w-1/4 text-center">Doctor</div>
+                <div className="w-1/4 text-center">Date & Time</div>
+                <div className="w-1/4 text-center">Status</div>
+            </div>
+            <div className="overflow-y-auto max-h-[290px] w-full ">
+
+                {appointmentsData.map((appointment,index)=>(
+                  <CustomAppointment
+                    key={index}
+                    patientName={appointment.patientName}
+                    doctorName={appointment.doctorName}
+                    date={appointment.date}
+                    time={appointment.time}
+                    status={appointment.status}
+                  />
+                ))}
+
+            </div>
+
           </div>
 
           <div className='col-span-4 h-96 flex flex-col bg-[#222831] shadow-lg shadow-[#FFF9AF] mr-5 mt-12 mb-10  border-2 border-[#222831] rounded-[8px] hover:scale-105 hover:border-[#FFFDB7] transition-all duration-300 ease-in'>
