@@ -76,13 +76,14 @@ const Body = () => {
       <div className='w-full min-h-screen bg-[#0B192C]'>
 
         {/* HEADER PART */}
-        <div className='w-full h-20 flex flex-row justify-end bg-[#222831] shadow-lg shadow-[#97B067] border-2 border-[#97B067] rounded-b-[10px]'>
-
-          {/* <NavLink to={''} className=' h-7  text-[15px] text-gray-300 mt-5 my-3 mr-10 px-4 pt-1 border-0 border-[#222831] rounded-full shadow-lg shadow-gray-900'><i className='fas fa-bell mr-2 text-gray-300'></i> Notifications</NavLink>
-          <NavLink to={''} className=' h-7  text-[15px] text-gray-300 mt-5 my-3 mr-30 px-4 pt-1 border-0 border-[#222831] rounded-full shadow-lg shadow-gray-900'><i className='fas fa-user mr-2 text-gray-300'></i> User Profile</NavLink> */}
-          <button className='h-7  text-[15px] text-gray-300 mt-5 my-3 mr-5 px-4 pt-1 hover:scale-110'><i className='fas fa-bell mr-2 text-gray-300'></i></button>
-          <button className="h-10 w-36 text-[15px] text-amber-100 font-semibold mt-4 mr-20 bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in"><i className="fas fa-user mr-2.5"></i>User Profile</button>
-        </div>
+        <div className="w-full h-16 flex items-center justify-end bg-slate-950 border-b-2 rounded-[5px] px-6 space-x-4">
+              <button className='text-[15px] text-gray-300 hover:scale-110'>
+                <i className='fas fa-bell text-gray-300'></i>
+              </button>
+              <button className="h-10 w-36 text-[15px] text-amber-100 font-semibold bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in">
+                <i className="fas fa-user mr-2.5"></i>User Profile
+              </button>
+            </div>
 
         <h1 className=' text-[30px] text-gray-300 mt-10 mx-7 font-semibold'><i className='fas fa-home mr-2'></i> Dashboard</h1>
 

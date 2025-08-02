@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className='w-full min-h-screen bg-[#000000] flex flex-col'>
+      <div className='w-full h-full bg-slate-950 flex flex-col'>
         {/* Sidebar Top */}
         <div className='w-full rounded-b-lg'>
           <img src={Logo} alt={Logo} width={125} height={80} className=' rounded-2xl mx-auto mt-6  hover:scale-110 transition-all duration-500 ease-in '></img>
@@ -28,17 +28,17 @@ const Sidebar = () => {
         {/* Sidebar Bottom */}
         <div className='w-full flex-1 p-0 m-0 '>
 
-          <nav className=' flex flex-col p-0 mt-7 gap-5'>
-            <NavLink to={'/Admin'} id='active' className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2.5 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F]  hover:border-amber-100 transistion-all duration-300 ease-in hover:scale-110'><i className='fas fa-tachometer-alt m-2'></i> Dashboard </NavLink>
+          <nav className=' flex flex-col p-0 mt-7 gap-3'>
+            <NavLink to={'/Admin'} id='active' className=' w-full flex gap-1 text-[17px] justify-center text-[#ECE5C7] py-3 px-2 font-semibold rounded-[7px] hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100'><i className='fas fa-tachometer-alt m-2'></i> Dashboard </NavLink>
 
             {/* <NavLink to={'/Pages/DoctorDashboard'} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-user-md m-2'></i>Doctors Details <i className='fas fa-angle-right float-right mt-2'></i></NavLink> */}
             <div className="relative">
               <button
                 onClick={toggleDoctors}
-                className='w-full text-[15px] text-center text-[#ECE5C7] py-3 mr-3 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:scale-110 duration-300 transition-all ease-in hover:border-amber-100'
+                className='w-full flex gap-6 text-[17px] justify-center text-[#ECE5C7] py-3 mr-4 font-semibold rounded-[7px] hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100'
               >
-                <span>
-                  <i className='fas fa-calendar-check mr-2'></i>Doctors Details
+                <span className="ml-12 ">
+                  <i className='fas fa-user-md mr-2'></i>Doctors
                 </span>
                 <i className={`${isDoctorsOpen ? 'fas fa-angle-up max-h-60 opacity-100 ' : 'fas fa-angle-down max-h-0'} float-right mr-3 mt-1 transition-transform duration-500  ease-in `}></i>
               </button>
@@ -64,10 +64,10 @@ const Sidebar = () => {
             <div className="relative">
               <button
                 onClick={toggleRecords}
-                className='w-full text-[15px] text-center text-[#ECE5C7] py-3 mr-3 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:scale-110 transition-all duration-300 ease-in hover:border-amber-100'
+                className='w-full flex gap-6 text-[17px] justify-center text-[#ECE5C7] py-3 mr-4 font-semibold rounded-[7px] hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100'
               >
-                <span>
-                  <i className='fas fa-folder-open mr-2'></i>Records Management
+                <span className="ml-12 ">
+                  <i className='fas fa-folder-open mr-2'></i>Records
                 </span>
                 <i className={`${isRecordsOpen ? 'fas fa-angle-up max-h-60 opacity-100' : 'fas fa-angle-down max-h-0'} float-right mr-3 mt-1 transition-transform duration-500 ease-in `}></i>
               </button>
@@ -91,8 +91,8 @@ const Sidebar = () => {
             <div className="relative">
               <button
                 onClick={togglePrescript}
-                className="w-full text-[15px] text-center text-[#ECE5C7] py-3 mr-3 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:scale-110 transition-all duration-300 ease-in hover:border-amber-100">
-                <span>
+                className="w-full flex gap-6 text-[17px] justify-center text-[#ECE5C7] py-3 mr-4 font-semibold rounded-[7px] hover:bg-[#00FFDD]   hover:text-[#0E185F] hover:border-amber-100">
+                <span className="ml-12 ">
                   <i className='fas fa-file-prescription mr-2'></i>Prescriptions
                 </span>
                 <i className={`${isPresOpen ? 'fas fa-angle-up max-h-60 opacity-100' : 'fas fa-angle-down max-h-0'} float-right mr-3 mt-1 transition-transform duration-500 ease-in `}></i>
@@ -113,7 +113,7 @@ const Sidebar = () => {
             <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-vial m-2' ></i>Lab Management   <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
             <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-file-invoice-dollar m-2' ></i> Billing & Claims <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
             <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-chart-line m-2' ></i>Reports & Analytics  <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
-            <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-cog m-2' ></i>System Settings  <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
+            
           </nav>
 
         </div>

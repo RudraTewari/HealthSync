@@ -9,7 +9,7 @@ import Prescriptions from './Prescription/Prescriptions';
 const AdminPanel = () => {
   return (
     <>
-        <div className=' flex w-full min-h-screen'>
+        <div className=' flex w-full min-h-screen  items-stretch'>
             <div className=' w-1/6 p-0 m-0'>
                 <Sidebar/>
             </div>
