@@ -184,7 +184,7 @@ const Body = () => {
                 <div className="w-1/4 text-center">Date & Time</div>
                 <div className="w-1/4 text-center">Status</div>
             </div>
-            <div className="overflow-y-auto max-h-[290px] w-full ">
+            <div className="overflow-y-auto max-h-[290px] w-full pr-4">
 
                 {appointmentsData.map((appointment,index)=>(
                   <CustomAppointment

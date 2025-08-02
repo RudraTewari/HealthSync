@@ -5,9 +5,13 @@ import AdminPanel from './Admin/AdminPanel';
 import UserPanel from './Patient/UserPanel';
 import NotFound from './NotFound';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import DoctorDashboard from './Admin/Pages/DoctorDashboard';
-import PatientRecords from './Admin/Pages/PatientRecords';
+import DoctorList from './Admin/Pages/DoctorList';
+import Specialization from './Admin/Pages/Specialization';
 import AddDoctor from './Admin/Pages/AddDoctor';
+import HealthRecords from './Admin/Records/HealthRecords';
+import Prescriptions from './Admin/Prescription/Prescriptions';
+import CreatePrescript from './Admin/Prescription/CreatePrescript';
+import Documents from './Admin/Records/Documents';
 import './App.css'
 
 function App() {
@@ -20,9 +24,13 @@ function App() {
           <Route path='/' element={<Home />}></Route>
           <Route path='/user' element={<UserPanel />}></Route>
           <Route path='/admin' element={<AdminPanel />}></Route>
-           <Route path='/Pages/DoctorDashboard' element={<DoctorDashboard/>}></Route> 
-           <Route path='/Pages/AddDoctor' element={<AddDoctor/>}></Route>
-          <Route path='/Pages/PatientRecords' element={<PatientRecords/>}></Route> 
+          <Route path='/Pages/DoctorList' element={<DoctorList/>}></Route> 
+          <Route path='/Pages/AddDoctor' element={<AddDoctor/>}></Route>
+          <Route path='/Pages/Specialization' element={<Specialization/>}></Route>
+          <Route path='/Records/HealthRecords' element={<HealthRecords/>}></Route>
+          <Route path='/Records/Documents' element={<Documents/>}></Route>
+          <Route path='/Prescription/Prescriptions' element={<Prescriptions/>}></Route>
+          <Route path='/Prescription/CreatePrescript' element={<CreatePrescript/>}></Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </Router>
