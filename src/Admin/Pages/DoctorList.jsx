@@ -30,12 +30,10 @@ const DoctorDashboard = () => {
           <div className="flex justify-between items-center px-7 pt-4 text-gray-300 font-semibold">
 
             
-            <div className="flex items-center gap-2 text-[30px] ">
-              <i className="fas fa-home"></i> <span>Dashboard</span>
-              <i className="fas fa-angle-right"></i>
-              <i className="fas fa-user-md"></i> <span>Doctors</span>
-              <i className="fas fa-angle-right"></i>
-              <span>Doctor List</span>
+            <div className="flex flex-col justify-start gap-2 text-[30px] mt-3 ml-4">
+              <span className='text-[34px] text-gray-400 font-bold '>Doctors</span>
+              <p className="text-[20px] text-gray-500 pb-2">Manage your medical staff and their information. </p>
+
             </div>
 
             
@@ -50,7 +48,7 @@ const DoctorDashboard = () => {
 
 
           <div className="flex-1 mx-2 my-2 bg-slate-950 rounded-md p-4">
-            <div className="w-full grid grid-cols-[20%_15%_10%_10%_10%_25%] justify-evenly border-b font-semibold border-gray-700 text-gray-400 text-[15px]">
+            <div className="w-full grid grid-cols-[20%_15%_10%_10%_10%_25%] justify-evenly border-b font-semibold border-gray-700 hover:bg-slate-600   hover:text-slate-300 transition-all duration-300 text-gray-400 text-[15px] py-4">
               <div>Name</div>
               <div>Specialty</div>
               <div>Status</div>
@@ -58,7 +56,7 @@ const DoctorDashboard = () => {
               <div>Experience</div>
               <div>Contact</div>
             </div>
-            <div className="w-full grid grid-cols-[20%_15%_10%_10%_10%_25%] justify-evenly border-b border-gray-800 py-3 text-sm text-gray-200">
+            <div className="w-full grid grid-cols-[20%_15%_10%_10%_10%_25%] justify-evenly border-b border-gray-800  hover:bg-slate-600 hover:text-slate-300 transition-all duration-300 py-5 text-sm text-gray-300 ">
               <div>Dr. Jane Smith</div>
               <div>Dermatology</div>
               <div>Active</div>

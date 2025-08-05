@@ -8,6 +8,8 @@ import Specialization from './Pages/Specialization';
 import Documents from './Records/Documents';
 import Prescriptions from './Prescription/Prescriptions';
 import CreatePrescript from './Prescription/CreatePrescript';
+import AllAppointments from './Appoint/AllAppointments';
+import AddAppointments from './Appoint/AddAppointments';
 
 const Sidebar = () => {
   const [isDoctorsOpen, setDoctorsOpen] = useState(false);
@@ -16,6 +18,8 @@ const Sidebar = () => {
   const toggleRecords = () => setRecordsOpen(!isRecordsOpen)
   const [isPresOpen, setPresOpen] = useState(false)
   const togglePrescript = () => setPresOpen(!isPresOpen)
+  const [isAppointOpen, setAppointOpen] = useState(false)
+  const toggleAppoint = () => setAppointOpen(!isAppointOpen)
 
   return (
     <>
@@ -31,7 +35,7 @@ const Sidebar = () => {
           <nav className=' flex flex-col p-0 mt-7 gap-3'>
             <NavLink to={'/Admin'} id='active' className=' w-full flex gap-1 text-[17px] justify-center text-[#ECE5C7] py-3 px-2 font-semibold rounded-[7px] hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100'><i className='fas fa-tachometer-alt m-2'></i> Dashboard </NavLink>
 
-            {/* <NavLink to={'/Pages/DoctorDashboard'} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-user-md m-2'></i>Doctors Details <i className='fas fa-angle-right float-right mt-2'></i></NavLink> */}
+            {/* Doctors */}
             <div className="relative">
               <button
                 onClick={toggleDoctors}
@@ -59,8 +63,8 @@ const Sidebar = () => {
 
 
 
-            {/* <NavLink to={'/Records/HealthRecords'} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-notes-medical m-2'></i>Patient Records <i className='fas fa-angle-right float-right mt-2'></i></NavLink> */}
-
+            
+              {/* Records */}
             <div className="relative">
               <button
                 onClick={toggleRecords}
@@ -83,11 +87,30 @@ const Sidebar = () => {
               )}
             </div>
 
-            <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-file-medical m-2' ></i>Appointments<i className='fas fa-angle-right float-right mt-2'></i></NavLink>
+            
+            {/* Appointments */}
+            <div className="relative">
+              <button
+                onClick={toggleAppoint}
+                className="w-full flex gap-6 text-[17px] justify-center text-[#ECE5C7] py-3 mr-4 font-semibold rounded-[7px] hover:bg-[#00FFDD]   hover:text-[#0E185F] hover:border-amber-100">
+                <span className="ml-12 ">
+                  <i className='fas fa-file-prescription mr-2'></i>Appointments
+                </span>
+                <i className={`${isAppointOpen ? 'fas fa-angle-up max-h-60 opacity-100' : 'fas fa-angle-down max-h-0'} float-right mr-3 mt-1 transition-transform duration-500 ease-in `}></i>
+              </button>
+              {isAppointOpen && (
+                <div className='ml-4 mt-2 flex flex-col bg-slate-800 transition-transform duration-300 ease-in mr-4'>
+                  <NavLink to='/Appoint/AllAppointments' className="text-sm font-semibold text-[#eeede4] hover:text-cyan-400 hover:bg-slate-950 transition-all duration-200 px-2 py-2 text-center">
+                    <i className='fas fa-file-medical mr-2'></i>All Appointments
+                  </NavLink>
+                  <NavLink to='/Appoint/AddAppointments' className="text-sm font-semibold text-[#eeede4] hover:text-cyan-400 hover:bg-slate-950 transition-all duration-200 px-2 py-2 text-center">
+                    <i className='fas fa-file-upload mr-2'></i>Add Appointments
+                  </NavLink>
+                </div>
+              )}
+            </div>
 
-
-
-            {/* <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-1 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-calendar-check mr-1'></i>Appointments Scheduling  <i className='fas fa-angle-right float-right mt-2'></i></NavLink> */}
+            {/* Prescription */}
             <div className="relative">
               <button
                 onClick={togglePrescript}
@@ -113,7 +136,7 @@ const Sidebar = () => {
             <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-vial m-2' ></i>Lab Management   <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
             <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-file-invoice-dollar m-2' ></i> Billing & Claims <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
             <NavLink to={''} className=' text-[15px] text-center text-[#ECE5C7] px-2 py-3 ml-2 mr-2.5 mt-2 font-semibold border-2 border-[#4AE3B5] rounded-full hover:bg-[#00FFDD] hover:text-[#0E185F] hover:border-amber-100 transition-all duration-300 ease-in hover:scale-110'><i className='fas fa-chart-line m-2' ></i>Reports & Analytics  <i className='fas fa-angle-right float-right mt-2'></i></NavLink>
-            
+
           </nav>
 
         </div>

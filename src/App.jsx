@@ -12,7 +12,10 @@ import HealthRecords from './Admin/Records/HealthRecords';
 import Prescriptions from './Admin/Prescription/Prescriptions';
 import CreatePrescript from './Admin/Prescription/CreatePrescript';
 import Documents from './Admin/Records/Documents';
+import AddAppointments from './Admin/Appoint/AddAppointments';
+import AllAppointments from './Admin/Appoint/AllAppointments';
 import './App.css'
+import AddSpecialization from './Admin/Pages/AddSpecialization';
 
 function App() {
   
@@ -27,8 +30,11 @@ function App() {
           <Route path='/Pages/DoctorList' element={<DoctorList/>}></Route> 
           <Route path='/Pages/AddDoctor' element={<AddDoctor/>}></Route>
           <Route path='/Pages/Specialization' element={<Specialization/>}></Route>
+          <Route path='/Pages/AddSpecialization' element={<AddSpecialization/>}></Route>
           <Route path='/Records/HealthRecords' element={<HealthRecords/>}></Route>
           <Route path='/Records/Documents' element={<Documents/>}></Route>
+          <Route path='/Appoint/AllAppointments' element={<AllAppointments/>}></Route>
+          <Route path='/Appoint/AddAppointments' element={<AddAppointments/>}></Route>
           <Route path='/Prescription/Prescriptions' element={<Prescriptions/>}></Route>
           <Route path='/Prescription/CreatePrescript' element={<CreatePrescript/>}></Route>
           <Route path='*' element={<NotFound />}></Route>

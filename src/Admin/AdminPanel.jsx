@@ -5,6 +5,7 @@ import DoctorList from './Pages/DoctorList';
 import HealthRecords from './Records/HealthRecords';
 import Body from './Body';
 import Prescriptions from './Prescription/Prescriptions';
+import AllAppointments from './Appoint/AllAppointments';
 
 const AdminPanel = () => {
   return (
@@ -18,6 +19,7 @@ const AdminPanel = () => {
                   <Route path='' element={<Body/>} />
                   <Route path='DoctorList' element={<DoctorList/>} />
                   <Route path='HealthRecords' element={<HealthRecords/>} />
+                  <Route path='AllAppointments' element={<AllAppointments/>}></Route>
                   <Route path='Prescription' element={<Prescriptions/>}/>
                 </Routes>
                 

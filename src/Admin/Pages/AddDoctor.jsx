@@ -1,7 +1,12 @@
 import React from 'react'
 import Sidebar from '../Sidebar'
+import { useState } from 'react'
+import Personal from './Personal'
+import Professional from './Professional'
 
 const AddDoctor = () => {
+  const [activeTab, setActiveTab] = useState('personal');
+
   return (
     <>
       <div className='w-full min-h-screen items-stretch'>
@@ -20,17 +25,31 @@ const AddDoctor = () => {
               </button>
             </div>
 
-            <div className="flex items-center gap-2 text-[30px] text-gray-400 mt-5 ml-3">
-              <i className="fas fa-home"></i> <span>Dashboard</span>
-              <i className="fas fa-angle-right"></i>
-              <i className="fas fa-user-md"></i> <span>Doctors</span>
-              <i className="fas fa-angle-right"></i>
-              <span>Add Doctor</span>
-             
+            <div className="flex flex-col justify-start  gap-2 mt-5 ml-8">
+              <span className='text-[34px] text-gray-400 font-bold '>Add Doctor</span>
+              <p className="text-[20px] text-gray-500">Add a new doctor to your clinic. </p>
+
             </div>
 
             <div className="flex-1 mx-2 my-2 bg-slate-950 rounded-md p-4 mt-5">
-              
+
+              <div className="flex space-x-6 mb-6">
+                <button
+                  onClick={() => setActiveTab('personal')}
+                  className={`px-4 py-2 rounded-full ${activeTab === 'personal' ? 'bg-white text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-400 hover:text-black'}`}
+                >
+                  Personal Information
+                </button>
+                <button
+                  onClick={() => setActiveTab('professional')}
+                  className={`px-4 py-2 rounded-full ${activeTab === 'professional' ? 'bg-white text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-400 hover:text-black'}`}
+                >
+                  Professional Details
+                </button>
+                
+              </div>
+              {activeTab === 'personal' && <div className="text-white"><Personal/> </div>}
+              {activeTab === 'professional' && <div className="text-white"><Professional/></div>}
 
             </div>
           </div>
@@ -41,7 +60,7 @@ const AddDoctor = () => {
 
       </div>
 
-    
+
     </>
   )
 }
