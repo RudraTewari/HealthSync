@@ -1,13 +1,18 @@
 import React from 'react'
 
-import { Button } from "@/components/ui/button"
 
-function AddSpecialization() {
+
+const AddSpecialization = () => {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
-  )
+    <>
+        <div className=" w-full p-0 m-0  bg-gray-700  ">
+          <div className='w-'>
+
+          </div>
+
+        </div>
+    </>
+  );
 }
 
 export default AddSpecialization
