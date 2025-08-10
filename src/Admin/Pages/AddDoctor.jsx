@@ -54,10 +54,6 @@ const AddDoctor = () => {
             </div>
           </div>
         </div>
-
-
-
-
       </div>
 
 

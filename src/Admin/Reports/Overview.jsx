@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../Sidebar'
 
-const Prescriptions = () => {
+const Overview = () => {
   return (
     <>
       <div className='w-full min-h-screen items-stretch'>
@@ -15,4 +15,4 @@ const Prescriptions = () => {
   )
 }
 
-export default Prescriptions
+export default Overview

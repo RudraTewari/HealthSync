@@ -42,17 +42,17 @@ const Personal = () => {
 
         <div className="col-span-6 w-full flex flex-col gap-3">
           <Label >First Name</Label>
-          <Input placeholder="Enter First Name" {...register('firstName',{required:"First Name is required"})}
-          className={cn(errors.firstName && "border-red-500")} />
-          {errors.firstName && (<p className=" text-red-500 text-sm">{errors.firstName.message}</p>)}
+          <Input placeholder="Enter First Name" {...register('docfirstName',{required:"First Name is required"})}
+          className={cn(errors.docfirstName && "border-red-500")} />
+          {errors.docfirstName && (<p className=" text-red-500 text-sm">{errors.docfirstName.message}</p>)}
         </div>
 
 
         <div className="col-span-6 w-full flex flex-col gap-3">
           <Label >Last Name</Label>
-          <Input placeholder="Enter Last Name" {...register('lastName',{required:"Last Name is required"})}
-          className={cn(errors.lastName && "border-red-500")} />
-          {errors.lastName && ( <p className="text-red-500 text-sm">{errors.lastName.message}</p>)}
+          <Input placeholder="Enter Last Name" {...register('doclastName',{required:"Last Name is required"})}
+          className={cn(errors.doclastName && "border-red-500")} />
+          {errors.doclastName && ( <p className="text-red-500 text-sm">{errors.doclastName.message}</p>)}
         </div>
 
 

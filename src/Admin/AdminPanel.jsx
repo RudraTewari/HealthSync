@@ -6,6 +6,9 @@ import HealthRecords from './Records/HealthRecords';
 import Body from './Body';
 import Prescriptions from './Prescription/Prescriptions';
 import AllAppointments from './Appoint/AllAppointments';
+import Overview from './Reports/Overview';
+
+
 
 const AdminPanel = () => {
   return (
@@ -17,10 +20,11 @@ const AdminPanel = () => {
             <div className ='w-5/6 col-span-10 p-0 m-0'>
                 <Routes>
                   <Route path='' element={<Body/>} />
-                  <Route path='DoctorList' element={<DoctorList/>} />
+                  {/* <Route path='DoctorList' element={<DoctorList/>} />
                   <Route path='HealthRecords' element={<HealthRecords/>} />
                   <Route path='AllAppointments' element={<AllAppointments/>}></Route>
                   <Route path='Prescription' element={<Prescriptions/>}/>
+                  <Route path='Overview' element={<Overview/>}/> */}
                 </Routes>
                 
             </div>

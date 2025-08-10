@@ -1,12 +1,12 @@
 import React from 'react'
 import Sidebar from '../Sidebar'
 
-const Prescriptions = () => {
+const CreateInvoice = () => {
   return (
     <>
       <div className='w-full min-h-screen items-stretch'>
         <div className="w-full min-h-screen grid grid-cols-12">
-          <div className="col-span-2">
+          <div className="col-span-2 ">
             <Sidebar />
           </div>
         </div>
@@ -15,4 +15,4 @@ const Prescriptions = () => {
   )
 }
 
-export default Prescriptions
+export default CreateInvoice

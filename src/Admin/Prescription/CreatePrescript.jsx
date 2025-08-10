@@ -5,8 +5,8 @@ const CreatePrescript = () => {
     return (
         <>
             <div className='w-full min-h-screen items-stretch'>
-                <div className=" grid grid-cols-12 p-0 m-0">
-                    <div className="col-span-2 p-0 m-0">
+                <div className=" w-full min-h-screen grid grid-cols-12">
+                    <div className="col-span-2">
                         <Sidebar />
                     </div>
                 </div>

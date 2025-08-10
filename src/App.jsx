@@ -16,6 +16,13 @@ import AddAppointments from './Admin/Appoint/AddAppointments';
 import AllAppointments from './Admin/Appoint/AllAppointments';
 import './App.css'
 import AddSpecialization from './Admin/Pages/AddSpecialization';
+import CreateInvoice from './Admin/Billing/CreateInvoice';
+import PaymentHistory from './Admin/Billing/PaymentHistory';
+import InsuranceClaims from './Admin/Billing/InsuranceClaims';
+import InvoiceHistory from './Admin/Billing/InvoiceHistory';
+import Overview from './Admin/Reports/Overview';
+import AppointmentReports from './Admin/Reports/AppointmentReports';
+import FinanceReports from './Admin/Reports/FinanceReports';
 
 function App() {
   
@@ -37,6 +44,13 @@ function App() {
           <Route path='/Appoint/AddAppointments' element={<AddAppointments/>}></Route>
           <Route path='/Prescription/Prescriptions' element={<Prescriptions/>}></Route>
           <Route path='/Prescription/CreatePrescript' element={<CreatePrescript/>}></Route>
+          <Route path = '/Billing/CreateInvoice' element ={<CreateInvoice/>}></Route>
+          <Route path='/Billing/PaymentHistory' element={<PaymentHistory/>}></Route>
+          <Route path='/Billing/InvoiceHistory' element={<InvoiceHistory/>}></Route>
+          <Route path='/Billing/InsuranceClaims' element={<InsuranceClaims/>}></Route>
+          <Route path ='/Reports/Overview' element={<Overview/>}></Route>
+          <Route path ='/Reports/AppointmentReports' element={<AppointmentReports/>}></Route>
+          <Route path ='/Reports/FinanceReports' element={<FinanceReports/>}></Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </Router>

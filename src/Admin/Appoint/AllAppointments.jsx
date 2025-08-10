@@ -12,11 +12,11 @@ const AllAppointments = () => {
 
     return (
         <div className='w-full min-h-screen items-stretch'>
-            <div className=" grid grid-cols-12 p-0 m-0">
-                <div className="col-span-2 p-0 m-0">
+            <div className="w-full min-h-screen grid grid-cols-12">
+                <div className="col-span-2">
                     <Sidebar />
                 </div>
-                <div className="col-span-10 bg-slate-900 h-full flex flex-col">
+                <div className="col-span-10 flex flex-col bg-slate-900 min-h-screen">
 
                     <div className="h-16 flex items-center justify-end bg-slate-950 border-b-2 rounded-[5px] px-6 space-x-4">
                         <button className="text-[15px] text-gray-300 hover:scale-110">
