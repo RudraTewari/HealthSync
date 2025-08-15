@@ -1,25 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import logo from '../assets/ChatGPT Image Jul 28, 2025, 07_48_37 PM.png' 
 
 const Sidebar = () => {
+  const baseClasses ="block text-[18px] font-medium text-center cursor-pointer px-4 py-3 rounded-lg transition-transform duration-200 text-shadow-5xs hover:text-shadow-2xs";
+  const activeClasses = "bg-emerald-300 text-amber-950 scale-110";
+  const inactiveClasses = "text-zinc-200 hover:bg-emerald-300 hover:text-amber-950 hover:scale-110";
+
   return (
     <div className="bg-slate-950 w-full px-10 py-4 h-full flex-col">
 
-      
       <div className="flex justify-center mt-4  mb-2">
         <img src={logo} alt="HealthSync Logo" className="w-40 h-auto cursor-pointer hover:scale-104 transition-transform duration-200" />
       </div>
 
       <ul className='space-y-2'>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Dashboard</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">My Profile</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Appointments</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Prescriptions</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Lab Records</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Messages</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Billing & Insurance</li>
-        <li className="text-zinc-200  hover:bg-emerald-300 hover:text-amber-950 text-[18px] text-shadow-5xs hover:text-shadow-2xs font-medium text-center cursor-pointer px-4 py-3 rounded-lg hover:scale-110 transition-transform duration-200">Notifications</li>
+        <li><NavLink to="/user" end className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Dashboard</NavLink></li>
+        <li><NavLink to="/user/Appointment" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Appointments</NavLink></li>
+        <li><NavLink to="/user/Prescription" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Prescriptions</NavLink></li>
+        <li><NavLink to="/user/LabReport" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Lab Records</NavLink></li>
+        <li><NavLink to="/user/BillingPayment" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Billing & Payement</NavLink></li>
+        <li><NavLink to="/user/Insurance" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Insurance</NavLink></li>  
       </ul>
     </div>
   )

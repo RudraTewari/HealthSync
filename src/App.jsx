@@ -23,6 +23,11 @@ import InvoiceHistory from './Admin/Billing/InvoiceHistory';
 import Overview from './Admin/Reports/Overview';
 import AppointmentReports from './Admin/Reports/AppointmentReports';
 import FinanceReports from './Admin/Reports/FinanceReports';
+import Appointment from './Patient/Appointment/Appointment';
+import Prescription from './Patient/Prescription/Prescription';
+import Insurance from './Patient/Insurance/Insurance';
+import BillingPayment from './Patient/BillingPayement/BillingPayment';
+import LabRecord from './Patient/LabRecord/LabRecord';
 
 function App() {
   
@@ -33,6 +38,11 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/user' element={<UserPanel />}></Route>
+          <Route path='/user/Appointment' element={<Appointment/>}></Route>
+          <Route path='/user/Prescription' element={<Prescription/>}></Route>
+          <Route path='/user/LabReport' element={<LabRecord/>}></Route>
+          <Route path='/user/BillingPayment' element={<BillingPayment/>}></Route>
+          <Route path='/user/Insurance' element={<Insurance/>}></Route>
           <Route path='/admin' element={<AdminPanel />}></Route>
           <Route path='/Pages/DoctorList' element={<DoctorList/>}></Route> 
           <Route path='/Pages/AddDoctor' element={<AddDoctor/>}></Route>
