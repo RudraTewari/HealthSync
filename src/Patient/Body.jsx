@@ -23,7 +23,7 @@ const Body = () => {
   const [activeInsurancePlansCount, setActiveInsurancePlansCount] = useState(1);
 
   return (
-    <div className="flex min-h-screen bg-slate-800">
+    <div className="flex min-h-screen bg-slate-800  ">
       {/* Main Content */}
       <div className="flex-1 p-6">
         {/* Top Navbar */}

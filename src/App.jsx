@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Home from './Components/Home';
+import Home from './Home/HomePage';
 import AdminPanel from './Admin/AdminPanel';
 import UserPanel from './Patient/UserPanel';
 import NotFound from './NotFound';
@@ -28,6 +28,12 @@ import Prescription from './Patient/Prescription/Prescription';
 import Insurance from './Patient/Insurance/Insurance';
 import BillingPayment from './Patient/BillingPayement/BillingPayment';
 import LabRecord from './Patient/LabRecord/LabRecord';
+import About from './Home/About';
+import Benefit from './Home/Benefits';
+import Contact from './Home/Contact';
+import Service from './Home/Service';
+import Team from './Home/Team';
+import Testinomial from './Home/Testimonials';
 
 function App() {
   
@@ -37,12 +43,21 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />}></Route>
+          {/*Home page*/} 
+          <Route path='/About' element={<About />}></Route>
+          <Route path='/Benefits' element={<Benefit />}></Route>
+          <Route path='/Contact' element={<Contact />}></Route>
+          <Route path='/Services' element={<Service />}></Route>
+          <Route path='/Team' element={<Team />}></Route>
+          <Route path='/Testinomials' element={<Testinomial />}></Route>
+          {/*Patient page*/} 
           <Route path='/user' element={<UserPanel />}></Route>
           <Route path='/user/Appointment' element={<Appointment/>}></Route>
           <Route path='/user/Prescription' element={<Prescription/>}></Route>
           <Route path='/user/LabReport' element={<LabRecord/>}></Route>
           <Route path='/user/BillingPayment' element={<BillingPayment/>}></Route>
           <Route path='/user/Insurance' element={<Insurance/>}></Route>
+          {/*Admin page*/} 
           <Route path='/admin' element={<AdminPanel />}></Route>
           <Route path='/Pages/DoctorList' element={<DoctorList/>}></Route> 
           <Route path='/Pages/AddDoctor' element={<AddDoctor/>}></Route>
