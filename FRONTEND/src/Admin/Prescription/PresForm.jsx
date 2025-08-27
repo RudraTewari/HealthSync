@@ -33,7 +33,7 @@ const PresForm = () => {
     setLoading(true)
     const formattedData = {
       ...data,
-      PrescriptDate: data.PrescriptDate?.toISOString().split('T')[0]
+      PrescriptDate: data.PrescriptDate ? new Date(data.PrescriptDate) : null
     };
 
     try {
@@ -237,7 +237,7 @@ const PresForm = () => {
               <Loader2 className="h-4 w-4 animate-spin" /> Saving...
             </>
           ) : (
-            "Save Appointment"
+            "Create Prescription"
           )}
         </Button>
       </div>
