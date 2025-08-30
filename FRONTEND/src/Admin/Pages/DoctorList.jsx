@@ -59,11 +59,10 @@ const DoctorDashboard = () => {
         {/* Doctors Table */}
         <div className="flex-1 mx-2 my-2 bg-slate-950 rounded-md p-4">
           {/* Table Header */}
-          <div className="w-full grid grid-cols-[20%_15%_10%_10%_10%_25%] border-b font-semibold border-gray-700 text-gray-400 text-[15px] py-4">
+          <div className="w-full grid grid-cols-[20%_20%_15%_15%_30%] border-b font-semibold border-gray-700 text-gray-400 text-[15px] py-4">
             <div className="px-4 text-left">Name</div>
             <div className="px-4 text-left">Specialty</div>
-            <div className="px-4 text-left">Status</div>
-            <div className="px-4 text-left">Patients</div>
+            <div className="px-4 text-left">Position</div>
             <div className="px-4 text-left">Experience</div>
             <div className="px-4 text-left">Contact</div>
           </div>
@@ -73,12 +72,11 @@ const DoctorDashboard = () => {
             doctors.map((doc) => (
               <div
                 key={doc.id}
-                className="w-full grid grid-cols-[20%_15%_10%_10%_10%_25%] border-b border-gray-800 py-4 text-sm text-gray-300 hover:bg-slate-800 transition-all duration-300"
+                className="w-full grid grid-cols-[20%_20%_15%_15%_30%] border-b border-gray-800 py-4 text-sm text-gray-300 hover:bg-slate-800 transition-all duration-300"
               >
                 <div className="px-4 text-left">{doc.name}</div>
                 <div className="px-4 text-left">{doc.specialty}</div>
-                <div className="px-4 text-left">{doc.status}</div>
-                <div className="px-4 text-left">{doc.patients}</div>
+                <div className="px-4 text-left">{doc.position}</div>
                 <div className="px-4 text-left">{doc.experience} yrs</div>
                 <div className="px-4 text-left">{doc.contact}</div>
               </div>

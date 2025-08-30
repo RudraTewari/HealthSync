@@ -60,18 +60,6 @@ const AllAppointments = () => {
                 >
                   All Appointments
                 </button>
-                <button
-                  onClick={() => setActiveTab('completed')}
-                  className={`px-4 py-2 rounded-full ${activeTab === 'completed' ? 'bg-white text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-400 hover:text-black'}`}
-                >
-                  Completed
-                </button>
-                <button
-                  onClick={() => setActiveTab('cancelled')}
-                  className={`px-4 py-2 rounded-full ${activeTab === 'cancelled' ? 'bg-white text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-400 hover:text-black'}`}
-                >
-                  Cancelled
-                </button>
               </div>
 
               <NavLink to='/Appoint/AddAppointments'>
@@ -84,8 +72,6 @@ const AllAppointments = () => {
 
             {/* Tab Content */}
             {activeTab === 'allAppoint' && <Appointments appointments={appointments} />}
-            {activeTab === 'completed' && <Completed appointments={appointments} />}
-            {activeTab === 'cancelled' && <Cancelled appointments={appointments} />}
           </div>
         </div>
       </div>

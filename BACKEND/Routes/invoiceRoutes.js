@@ -3,5 +3,5 @@ const router = express.Router();
 
 const {createInvoice} = require('../Controller/invoiceController.js');
 
-router.post("/invoices",createInvoice);
+router.post("/addinvoices",createInvoice);
 module.exports=router;

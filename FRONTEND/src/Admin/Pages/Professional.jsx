@@ -40,13 +40,13 @@ const Professional = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="cardio">Cardiology</SelectItem>
-                    <SelectItem value="dermat">Dermatology</SelectItem>
-                    <SelectItem value="neuro">Neurology</SelectItem>
-                    <SelectItem value="ortho">Orthopedics</SelectItem>
-                    <SelectItem value="pediatri">Pediatrics</SelectItem>
-                    <SelectItem value="psychi">Psychiatry</SelectItem>
-                    <SelectItem value="medicine">General Medicine</SelectItem>
+                    <SelectItem value="Cardiology">Cardiology</SelectItem>
+                    <SelectItem value="Dermatology">Dermatology</SelectItem>
+                    <SelectItem value="Neurology">Neurology</SelectItem>
+                    <SelectItem value="Orthopedics">Orthopedics</SelectItem>
+                    <SelectItem value="Pediatrics">Pediatrics</SelectItem>
+                    <SelectItem value="Psychiatry">Psychiatry</SelectItem>
+                    <SelectItem value="GeneralMedicine">General Medicine</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -69,13 +69,13 @@ const Professional = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="cardio">Cardiology</SelectItem>
-                    <SelectItem value="dermat">Dermatology</SelectItem>
-                    <SelectItem value="neuro">Neurology</SelectItem>
-                    <SelectItem value="ortho">Orthopedics</SelectItem>
-                    <SelectItem value="pediatri">Pediatrics</SelectItem>
-                    <SelectItem value="psychi">Psychiatry</SelectItem>
-                    <SelectItem value="medicine">General Medicine</SelectItem>
+                    <SelectItem value="Cardiology">Cardiology</SelectItem>
+                    <SelectItem value="Dermatology">Dermatology</SelectItem>
+                    <SelectItem value="Neurology">Neurology</SelectItem>
+                    <SelectItem value="Orthopedics">Orthopedics</SelectItem>
+                    <SelectItem value="Pediatrics">Pediatrics</SelectItem>
+                    <SelectItem value="Psychiatry">Psychiatry</SelectItem>
+                    <SelectItem value="GeneralMedicine">General Medicine</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -161,10 +161,10 @@ const Professional = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="depthead">Department Head</SelectItem>
-                    <SelectItem value="seDoc">Senior Doctor</SelectItem>
-                    <SelectItem value="specialist">Specialist</SelectItem>
-                    <SelectItem value="intern">Intern</SelectItem>
+                    <SelectItem value="DepartmentHead">Department Head</SelectItem>
+                    <SelectItem value="SeniorDoctor">Senior Doctor</SelectItem>
+                    <SelectItem value="Specialist">Specialist</SelectItem>
+                    <SelectItem value="Intern">Intern</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

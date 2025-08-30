@@ -5,7 +5,7 @@ const API = axios.create({ baseURL: "http://localhost:5000/api" });
 // Add Appointment
 export const addAppointment = async (data) => {
   try {
-    const res = await API.post("/appointments", data);
+    const res = await API.post("/addappointments", data);
     return res.data;
   } catch (error) {
     console.error("Error while adding appointment:", error);
@@ -16,7 +16,7 @@ export const addAppointment = async (data) => {
 
 export const addPrescription = async (data) => {
   try {
-    const res = await API.post("/prescription", data);
+    const res = await API.post("/addprescription", data);
     return res.data;
   } catch (error) {
     console.error("Error while adding prescription:", error);
@@ -36,7 +36,7 @@ export const addDoctor = async (data) => {
 
 export const addInvoices = async (data) => {
   try {
-    const res = await API.post("/invoices", data);
+    const res = await API.post("/addinvoices", data);
     return res.data;
   } catch (error) {
     console.error("Error while creating invoices:", error);

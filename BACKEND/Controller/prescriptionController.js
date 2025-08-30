@@ -41,4 +41,25 @@ const createPrescription = async (req, res) => {
   }
 };
 
-module.exports = { createPrescription };
+const getPrescriptions = async (req, res) => {
+  try {
+    const prescriptions = await Prescription.find().select(
+      "PatientName DoctorName PrescriptDate medicines"
+    );
+
+    const formattedPrescriptions = prescriptions.map((pres) => ({
+      id: pres._id,
+      patientName: pres.PatientName,
+      doctorName: pres.DoctorName,
+      date: pres.PrescriptDate ? new Date(pres.PrescriptDate).toLocaleDateString() : "",
+      medications: pres.medicines.map((med) => med.name), // Only medicine names
+    }));
+
+    res.json(formattedPrescriptions);
+  } catch (err) {
+    console.error("Error fetching prescriptions:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+module.exports = { createPrescription,getPrescriptions };

@@ -11,6 +11,7 @@ import {
   RadioGroup,
   RadioGroupItem
 } from "@/components/ui/radio-group";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { ChevronDownIcon, Loader2 } from "lucide-react";
 import { addAppointment } from "@/Services/api";
 
@@ -70,7 +71,7 @@ const Form = () => {
         <Input
           {...register("patientName", { required: true })}
           className="text-white placeholder:text-gray-500"
-           placeholder="Enter patient name"
+          placeholder="Enter patient name"
         />
         {errors.patientName && (
           <p className="text-red-500 text-sm">Name is required</p>
@@ -147,17 +148,26 @@ const Form = () => {
         <Controller
           name="status"
           control={control}
-          defaultValue="pending"
+          defaultValue="Pending"
           render={({ field }) => (
-            <RadioGroup onValueChange={field.onChange} value={field.value}>
+            <RadioGroup onValueChange={field.onChange} value={field.value} className="flex space-x-4">
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="pending" id="pending" />
+                <RadioGroupItem
+                  value="Pending"
+                  id="pending"
+                  className="h-4 w-4 border border-gray-400 rounded-full bg-white "
+                />
                 <Label htmlFor="pending" className="text-white">
                   Pending
                 </Label>
               </div>
+
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="confirmed" id="confirmed" />
+                <RadioGroupItem
+                  value="Confirmed"
+                  id="confirmed"
+                  className="h-4 w-4 border border-gray-400 rounded-full bg-white "
+                />
                 <Label htmlFor="confirmed" className="text-white">
                   Confirmed
                 </Label>
@@ -167,6 +177,33 @@ const Form = () => {
         />
       </div>
 
+      <div className="col-span-6">
+        <Label className="text-white my-2">Appointment Time</Label>
+        <Controller
+          name="appointTime"
+          control={control}
+          defaultValue=""
+          rules={{ required: "Time is required" }}
+          render={({ field }) => (
+            <Select onValueChange={field.onChange} value={field.value}>
+              <SelectTrigger className="w-full bg-slate-900 text-white border border-gray-400 rounded">
+                <SelectValue placeholder="Select time" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10:00 AM">10:00 AM</SelectItem>
+                <SelectItem value="11:00 AM">11:00 AM</SelectItem>
+                <SelectItem value="12:00 PM">12:00 PM</SelectItem>
+                <SelectItem value="3:00 PM">3:00 PM</SelectItem>
+                <SelectItem value="5:00 PM">5:00 PM</SelectItem>
+                <SelectItem value="6:00 PM">6:00 PM</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
+        {errors.appointTime && (
+          <p className="text-red-500 text-sm">{errors.appointTime.message}</p>
+        )}
+      </div>
       {/* Submit */}
       <div className="col-span-12 mt-8 flex justify-center">
         <Button

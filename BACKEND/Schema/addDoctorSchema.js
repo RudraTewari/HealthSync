@@ -11,8 +11,8 @@ const addDoctorSchema = new mongoose.Schema({
   pincode: { type: Number, required: true },
   email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
   number: { type: Number, required: true },
-  specialize: { type: String, required: true },
-  secSpecialize: { type: String },
+  specialize: { type: String, required: true ,enum: ["Cardiology","Dermatology", "Neurology", "Orthopedics","Pediatrics","Psychiatry","General Medicine"] },
+  secSpecialize: { type: String,enum: ["Cardiology","Dermatology", "Neurology", "Orthopedics","Pediatrics","Psychiatry","GeneralMedicine"] },
   licNumber: { type: Number, required: true, unique: true },
   expire: { type: Date, required: true },
   qualify: { type: String, required: true },
@@ -20,7 +20,7 @@ const addDoctorSchema = new mongoose.Schema({
   position: { 
     type: String, 
     required: true, 
-    enum: ["depthead", "seDoc", "specialist", "intern"] 
+    enum: ["DepartmentHead", "SeniorDoctor", "Specialist", "Intern"] 
   }
 }, { timestamps: true });
 

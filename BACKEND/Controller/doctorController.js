@@ -12,4 +12,25 @@ const createDoctor = async (req, res) => {
   }
 };
 
-module.exports = { createDoctor };
+const getDoctors = async (req, res) => {
+  try {
+    // fetch only selected fields
+    const doctors = await Doctor.find().select("docfirstName doclastName specialize experience number position");
+
+    const formattedDoctors = doctors.map(doc => ({
+      name: `${doc.docfirstName} ${doc.doclastName}`,
+      specialty: doc.specialize,
+      experience: doc.experience,
+      contact: doc.number,
+      position: doc.position // you can map 'position' to a friendly status
+    }));
+
+    res.json(formattedDoctors);
+  } catch (err) {
+    console.error("Error fetching doctors:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+ 
+module.exports = { createDoctor, getDoctors };
