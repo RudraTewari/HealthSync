@@ -1,17 +1,28 @@
-import React from "react"
+import React,{useState} from "react"
 import Sidebar from "../Sidebar"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { addDocument } from "@/Services/api"
+import { Loader2 } from "lucide-react";
 
 const Documents = () => {
     const { register, handleSubmit, reset } = useForm()
+    const [loading, setLoading] = useState(false)
 
-    const onSubmit = (data) => {
-        console.log("Uploaded Document:", data)
-        // In future: send to backend with fetch/axios
-        reset()
+    const onSubmit = async (data) => {
+        setLoading(true)
+
+        try {
+            await addDocument(data)
+            alert("Document uploaded successfully!")
+            reset()
+        } catch (error) {
+            alert("Error: " + (error.response?.data?.message || "Server error"));
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -91,9 +102,19 @@ const Documents = () => {
                             </div>
 
                             {/* Submit Button */}
-                            <div className="flex justify-center">
-                                <Button type="submit" className="w-36">
-                                    Upload Document
+                            <div className="col-span-12 mt-8 flex justify-center">
+                                <Button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="bg-amber-100 text-slate-950 px-7 hover:text-amber-100 flex items-center gap-2"
+                                >
+                                    {loading ? (
+                                        <>
+                                            <Loader2 className="h-4 w-4 animate-spin" /> Uploading...
+                                        </>
+                                    ) : (
+                                        "Upload Document"
+                                    )}
                                 </Button>
                             </div>
 

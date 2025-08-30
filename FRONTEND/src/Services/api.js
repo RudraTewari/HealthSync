@@ -44,3 +44,20 @@ export const addInvoices = async (data) => {
   }
 };
 
+export const addDocument = async (data) => {
+  try {
+    const formData = new FormData();
+    formData.append("docName", data.docName);
+    formData.append("docType", data.docType);
+    formData.append("file", data.file[0]); // single file upload
+
+    const res = await API.post("/documents", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error(" Error while uploading document:", error);
+    throw error;
+  }
+};

@@ -3,40 +3,6 @@ import Sidebar from '../Sidebar';
 import InvoiceForm from './InvoiceForm';
 
 const CreateInvoice = () => {
-  const [loading, setLoading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-
-  // Wrapper function to handle form submission from InvoiceForm
-  const handleInvoiceSubmit = async (formData) => {
-    setLoading(true);
-    setSuccessMsg('');
-    setErrorMsg('');
-
-    // Format date
-    const formattedData = {
-      ...formData,
-      InvoiceDate: formData.InvoiceDate ? formData.InvoiceDate.toISOString().split("T")[0] : null,
-    };
-
-    try {
-      const res = await fetch("/api/invoices", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formattedData),
-      });
-
-      if (!res.ok) throw new Error("Failed to save invoice");
-
-      const result = await res.json();
-      setSuccessMsg("Invoice saved successfully!");
-    } catch (error) {
-      console.error(error);
-      setErrorMsg("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="w-full min-h-screen items-stretch">
@@ -70,12 +36,8 @@ const CreateInvoice = () => {
               <p className="text-[15px] font-semibold text-gray-400">Enter the details for the new invoice.</p>
             </div>
 
-            {/* Display success or error message */}
-            {successMsg && <p className="text-green-500 font-semibold my-2">{successMsg}</p>}
-            {errorMsg && <p className="text-red-500 font-semibold my-2">{errorMsg}</p>}
-
             {/* Invoice Form */}
-            <InvoiceForm onSubmit={handleInvoiceSubmit} loading={loading} />
+            <InvoiceForm />
           </div>
         </div>
       </div>

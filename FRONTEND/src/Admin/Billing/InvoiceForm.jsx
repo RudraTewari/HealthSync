@@ -7,29 +7,30 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ChevronDownIcon,Loader2 } from "lucide-react";
+import { ChevronDownIcon, Loader2 } from "lucide-react";
 import { addInvoices } from '@/Services/api';
 
 const InvoiceForm = () => {
-  const { register, handleSubmit, control, formState: { errors },reset } = useForm();
+  const { register, handleSubmit, control, formState: { errors }, reset } = useForm();
   const [open, setOpen] = useState(false);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
-    // Format date before sending to backend
     setLoading(true);
+
     const formattedData = {
       ...data,
-      InvoiceDate: data.InvoiceDate ? data.InvoiceDate.toISOString().split("T")[0] : null,
+      InvoiceDate: data.InvoiceDate ? new Date(data.InvoiceDate) : null,
+      Amount: data.Amount ? parseFloat(data.Amount) : 0
     };
 
     try {
-      await addInvoices(formattedData)
-      alert("Invoice Created successfully");
-      reset()
+      await addInvoices(formattedData);
+      alert("Invoice created successfully!");
+      reset();
     } catch (error) {
       alert("Error: " + (error.response?.data?.message || "Server error"));
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -41,28 +42,28 @@ const InvoiceForm = () => {
         <Label className="text-white">Invoice Number</Label>
         <Input
           type="text"
-          placeholder="Format INV-123"
-          {...register("invoice", {
+          placeholder="Format INV-1234"
+          {...register("InvoiceNumber", {
             required: "Invoice Number is required",
             pattern: {
-              value: /^INV-\d{3}$/,
-              message: "Format must be INV-123"
+              value: /^INV-\d{4}$/,
+              message: "Format must be INV-and 4 digits"
             }
           })}
-          className={cn("text-white caret-amber-100", errors.invoice && "border-red-500")}
+          className={cn("text-white caret-amber-100", errors.InvoiceNumber && "border-red-500")}
         />
-        {errors.invoice && <p className="text-red-500 text-sm">{errors.invoice.message}</p>}
+        {errors.InvoiceNumber && <p className="text-red-500 text-sm">{errors.InvoiceNumber.message}</p>}
       </div>
 
-      {/* Patient Name */}
+      {/* Customer Name */}
       <div className="col-span-6 flex flex-col gap-3">
-        <Label className='text-white'>Patient Name</Label>
+        <Label className='text-white'>Customer Name</Label>
         <Input
-          placeholder="Enter Patient Name"
-          {...register('Patientname', { required: "Patient Name is required" })}
-          className={cn("text-white caret-amber-100", errors.Patientname && "border-red-500")}
+          placeholder="Enter Customer Name"
+          {...register('CustomerName', { required: "Customer Name is required" })}
+          className={cn("text-white caret-amber-100", errors.CustomerName && "border-red-500")}
         />
-        {errors.Patientname && <p className="text-red-500 text-sm">{errors.Patientname.message}</p>}
+        {errors.CustomerName && <p className="text-red-500 text-sm">{errors.CustomerName.message}</p>}
       </div>
 
       {/* Invoice Date */}
@@ -109,28 +110,29 @@ const InvoiceForm = () => {
         <Input
           type="number"
           placeholder="Enter Amount"
-          {...register('amount', { required: "Amount is required" })}
-          className={cn("text-white caret-amber-100", errors.amount && "border-red-500")}
+          {...register('Amount', { required: "Amount is required" })}
+          className={cn("text-white caret-amber-100", errors.Amount && "border-red-500")}
         />
-        {errors.amount && <p className="text-red-500 text-sm">{errors.amount.message}</p>}
+        {errors.Amount && <p className="text-red-500 text-sm">{errors.Amount.message}</p>}
       </div>
 
       {/* Balance */}
       <div className="col-span-3 flex flex-col gap-3">
         <Label className='text-white'>Balance</Label>
         <Input
+          type="number"
           placeholder="Enter Balance"
-          {...register('balance', { required: "Balance is required" })}
-          className={cn("text-white caret-amber-100", errors.balance && "border-red-500")}
+          {...register('Balance')}
+          className={cn("text-white caret-amber-100", errors.Balance && "border-red-500")}
         />
-        {errors.balance && <p className="text-red-500 text-sm">{errors.balance.message}</p>}
+        {errors.Balance && <p className="text-red-500 text-sm">{errors.Balance.message}</p>}
       </div>
 
       {/* Invoice Status */}
       <div className="col-span-6 flex flex-col gap-3">
         <Label className="text-white">Status</Label>
         <Controller
-          name="invoiceStatus"
+          name="InvoiceStatus"
           control={control}
           rules={{ required: "Please select status" }}
           render={({ field }) => (
@@ -150,14 +152,14 @@ const InvoiceForm = () => {
             </RadioGroup>
           )}
         />
-        {errors.invoiceStatus && <p className="text-red-500 text-sm">{errors.invoiceStatus.message}</p>}
+        {errors.InvoiceStatus && <p className="text-red-500 text-sm">{errors.InvoiceStatus.message}</p>}
       </div>
 
       {/* Insurance Status */}
       <div className="col-span-6 flex flex-col gap-3">
         <Label className="text-white">Insurance Status</Label>
         <Controller
-          name="insuranceStatus"
+          name="InsuranceStatus"
           control={control}
           rules={{ required: "Please select status" }}
           render={({ field }) => (
@@ -177,7 +179,7 @@ const InvoiceForm = () => {
             </RadioGroup>
           )}
         />
-        {errors.insuranceStatus && <p className="text-red-500 text-sm">{errors.insuranceStatus.message}</p>}
+        {errors.InsuranceStatus && <p className="text-red-500 text-sm">{errors.InsuranceStatus.message}</p>}
       </div>
 
       {/* Submit Button */}
