@@ -1,15 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/ChatGPT Image Jul 28, 2025, 07_48_37 PM.png";
-import { Mail, Phone, MapPin, Clock } from "lucide-react"; // icons
 import { motion } from "framer-motion";
 
-const Contact = () => {
-  const contactData = [
-    { icon: MapPin, title: "Office Address", color: "text-red-400", desc: ["12th Floor, Infinity Benchmark Tower,", "Sector V, Salt Lake, Kolkata – 700091"] },
-    { icon: Phone, title: "Call Us", color: "text-green-400", desc: ["+91 33 4000 1234", "+91 98765 43210"] },
-    { icon: Mail, title: "Email", color: "text-cyan-400", desc: ["support@ehealthkolkata.in", "info@ehealthrecord.org"] },
-    { icon: Clock, title: "Working Hours", color: "text-purple-400", desc: ["Mon – Fri: 9:30 AM – 6:30 PM", "Sat: 10:00 AM – 2:00 PM"] },
+const Help = () => {
+  const helpCards = [
+    { title: "Account Setup", desc: "Learn how to create, manage, and secure your account efficiently.", gradient: "from-cyan-300 to-blue-400" },
+    { title: "Using the Platform", desc: "Step-by-step guide on accessing, updating, and sharing your health records.", gradient: "from-purple-300 to-pink-400" },
+    { title: "Support & Contact", desc: "Find ways to reach our support team and get help with any issues.", gradient: "from-emerald-300 to-teal-400" },
   ];
 
   return (
@@ -34,9 +32,9 @@ const Contact = () => {
       </nav>
 
       {/* ================= HERO SECTION ================= */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
+      <section className="flex-1 flex flex-col items-center text-center px-6 py-20 bg-gradient-to-b from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
 
-        {/* Animated Floating Shapes */}
+        {/* Background animated shapes */}
         <motion.div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <motion.div
             className="absolute rounded-full opacity-20 w-64 h-64 top-[-10%] left-[-10%] bg-gradient-to-r from-yellow-400 to-orange-400"
@@ -57,47 +55,46 @@ const Contact = () => {
 
         {/* Title */}
         <motion.h1
-          className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 mb-6 leading-tight pb-2 z-10"
+          className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-500 leading-tight pb-4 z-10"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          Contact Us
+          Help & Support
         </motion.h1>
 
         {/* Intro */}
         <motion.p
-          className="text-lg text-gray-300 mb-12 max-w-2xl z-10 leading-relaxed"
+          className="text-lg text-gray-300 max-w-3xl leading-relaxed mb-12 z-10"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 1 }}
         >
-          We’re here to help! Reach out to our E-Health Record office in <span className="text-yellow-300 font-semibold">Kolkata</span> for support, partnerships, or general queries.
+          Here you can find answers to common questions, tips on using the platform,
+          and ways to get in touch with our support team for personalized assistance.
         </motion.p>
 
-        {/* Contact Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6 max-w-4xl z-10">
-          {contactData.map(({ icon: Icon, title, color, desc }, idx) => (
+        {/* Help Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto z-10">
+          {helpCards.map(({ title, desc, gradient }, idx) => (
             <motion.div
               key={idx}
-              className="p-6 bg-gray-800 rounded-xl shadow-lg shadow-black/40 flex items-start space-x-4 hover:scale-105 transition relative overflow-hidden"
+              className="p-6 bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center relative overflow-hidden"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.2, duration: 0.6 }}
+              whileHover={{ scale: 1.05 }}
             >
-              {/* Subtle animated blob for each card */}
+              {/* Animated blob for each card */}
               <motion.div
-                className={`absolute w-32 h-32 rounded-full opacity-10 top-[-10%] left-[-10%] bg-gradient-to-r ${color.replace("text-", "from-")} to-transparent`}
+                className={`absolute w-32 h-32 rounded-full opacity-10 top-[-10%] left-[-10%] bg-gradient-to-r ${gradient}`}
                 animate={{ rotate: [0, 360] }}
                 transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
               />
-              <Icon className={`${color} w-8 h-8 z-10`} />
-              <div className="text-left z-10">
-                <h2 className={`text-xl font-semibold ${color}`}>{title}</h2>
-                {desc.map((line, i) => (
-                  <p className="text-gray-300 mt-1" key={i}>{line}</p>
-                ))}
-              </div>
+              <h3 className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${gradient} mb-2 z-10`}>
+                {title}
+              </h3>
+              <p className="text-sm text-gray-300 leading-relaxed z-10">{desc}</p>
             </motion.div>
           ))}
         </div>
@@ -119,8 +116,9 @@ const Contact = () => {
           </div>
         </div>
       </footer>
+
     </div>
   );
 };
 
-export default Contact;
+export default Help;

@@ -32,6 +32,9 @@ import Contact from './Home/Contact';
 import Service from './Home/Service';
 import Team from './Home/Team';
 import Testinomial from './Home/Testimonials';
+import Help from './Home/Help';
+import Terms from './Home/Terms';
+import Privacy from './Home/Privacy';
 
 function App() {
   
@@ -48,6 +51,9 @@ function App() {
           <Route path='/Services' element={<Service />}></Route>
           <Route path='/Team' element={<Team />}></Route>
           <Route path='/Testinomials' element={<Testinomial />}></Route>
+          <Route path='/Help' element={<Help />}></Route>
+          <Route path='/Privacy' element={<Privacy />}></Route>
+          <Route path='/Terms' element={<Terms />}></Route>
           {/*Patient page*/} 
           <Route path='/user' element={<UserPanel />}></Route>
           <Route path='/user/Appointment' element={<Appointment/>}></Route>

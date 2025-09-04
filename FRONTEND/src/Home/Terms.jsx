@@ -1,29 +1,10 @@
-// Testimonials.jsx v2 (Animated Background + Scale Hover)
+// Terms.jsx v2 (Animated Background + Card Hover)
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "../assets/ChatGPT Image Jul 28, 2025, 07_48_37 PM.png";
-import { Quote } from "lucide-react";
 
-const Testimonials = () => {
-  const feedbacks = [
-    {
-      name: "Ananya Sen",
-      role: "Patient",
-      quote: "E-Health Record has made managing my health so easy. I can access my reports anytime and share them instantly with my doctor.",
-    },
-    {
-      name: "Dr. Rajesh Malhotra",
-      role: "Cardiologist",
-      quote: "The platform saves me hours every week. Seamless access to patient history means I can make decisions faster and with more confidence.",
-    },
-    {
-      name: "Kavita R.",
-      role: "Caregiver",
-      quote: "Handling my mother’s medical records used to be overwhelming. Now everything is organized, secure, and accessible in one place.",
-    },
-  ];
-
+const Terms = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 relative overflow-hidden">
 
@@ -51,51 +32,72 @@ const Testimonials = () => {
         {/* Background animated shapes */}
         <motion.div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <motion.div
-            className="absolute bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 w-72 h-72 top-[-10%] left-[-10%]"
-            animate={{ x: [0, 150, 0], y: [0, 80, 0] }}
+            className="absolute bg-gradient-to-r from-cyan-400 to-teal-400 rounded-full opacity-20 w-72 h-72 top-[-15%] left-[-10%]"
+            animate={{ x: [0, 150, -80, 0], y: [0, 100, -50, 0] }}
             transition={{ repeat: Infinity, duration: 25, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bg-gradient-to-r from-cyan-400 to-teal-400 rounded-full opacity-15 w-96 h-96 bottom-[-25%] right-[-20%]"
-            animate={{ x: [-80, 120, -80], y: [0, -100, 0] }}
-            transition={{ repeat: Infinity, duration: 28, ease: "easeInOut" }}
+            className="absolute bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-15 w-96 h-96 bottom-[-30%] right-[-20%]"
+            animate={{ x: [-50, 120, -90, 0], y: [0, -80, 50, 0] }}
+            transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-10 w-80 h-80 top-[40%] left-[60%]"
-            animate={{ x: [-50, 70, -50], y: [0, 50, 0] }}
-            transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}
+            className="absolute bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-10 w-80 h-80 top-[30%] left-[60%]"
+            animate={{ x: [-40, 70, -50, 0], y: [0, 50, -30, 0] }}
+            transition={{ repeat: Infinity, duration: 28, ease: "easeInOut" }}
           />
         </motion.div>
 
         {/* Title */}
-        <motion.h1
-          className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-500 mb-6 leading-tight z-10"
+        <motion.div
+          className="flex flex-col items-center mb-6 z-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          What People Say
-        </motion.h1>
+          <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-500 leading-tight pb-2">
+            Terms of Service
+          </h1>
+        </motion.div>
 
+        {/* Description */}
         <p className="text-lg text-gray-300 mb-10 max-w-3xl z-10">
-          Hear from patients, doctors, and caregivers who rely on E-Health Record to simplify healthcare and improve everyday lives.
+          By using our E-Health Record Platform, you agree to these terms of service. 
+          Please read them carefully to understand your rights, responsibilities, 
+          and our commitments to protecting your privacy, security, and data integrity.
         </p>
 
-        {/* Testimonial Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto z-10">
-          {feedbacks.map(({ name, role, quote }, i) => (
+        {/* Terms Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto z-10">
+          {[
+            {
+              title: "User Responsibilities",
+              desc: "Users must provide accurate information, maintain confidentiality of login details, and use the platform ethically.",
+              gradient: "from-cyan-300 to-blue-400"
+            },
+            {
+              title: "Data Usage",
+              desc: "We collect and process data solely for improving healthcare access, ensuring security, and enhancing platform performance.",
+              gradient: "from-purple-300 to-pink-400"
+            },
+            {
+              title: "Limitations",
+              desc: "The platform is provided as-is. While we ensure best efforts for uptime, we are not liable for interruptions beyond control.",
+              gradient: "from-emerald-300 to-teal-400"
+            }
+          ].map(({ title, desc, gradient }, idx) => (
             <motion.div
-              key={i}
-              className="p-6 bg-gray-800 rounded-xl shadow-lg shadow-black/40 hover:shadow-purple-500/20 hover:scale-105 transition flex flex-col"
+              key={idx}
+              className="p-6 bg-gray-800 rounded-xl shadow-lg flex flex-col items-center text-center transition-all hover:shadow-xl"
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
+              transition={{ duration: 0.6, delay: idx * 0.2 }}
               whileHover={{ scale: 1.05 }}
             >
-              <Quote className="text-purple-400 w-8 h-8 mb-3" />
-              <p className="text-gray-300 italic mb-4">“{quote}”</p>
-              <h2 className="text-lg font-semibold text-purple-300">{name}</h2>
-              <p className="text-sm text-gray-400">{role}</p>
+              <h3 className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${gradient} mb-2`}>
+                {title}
+              </h3>
+              <p className="text-sm text-gray-300 leading-relaxed">{desc}</p>
             </motion.div>
           ))}
         </div>
@@ -119,4 +121,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials;
+export default Terms;
