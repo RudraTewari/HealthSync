@@ -1,42 +1,75 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar';
-
-const doctorsList = [
-  { id: 1, name: 'Dr. Aditi Sharma', specialty: 'Cardiologist' },
-  { id: 2, name: 'Dr. Rohan Mehta', specialty: 'Dermatologist' },
-  { id: 3, name: 'Dr. Vikram Singh', specialty: 'Neurologist' },
-];
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import Sidebar from "../Sidebar";
 
 const Appointments = () => {
-  const [appointments, setAppointments] = useState([]);
-  const [form, setForm] = useState({ doctorId: '', date: '', time: '' });
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [pendingAppointments, setPendingAppointments] = useState([]);
+  const [confirmedAppointments, setConfirmedAppointments] = useState([]);
+  const [form, setForm] = useState({
+    patientName: "",
+    date: "",
+    time: "",
+    symptoms: "",
+  });
+  const [userDropdown, setUserDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
-  useEffect(() => {
-    const stored = localStorage.getItem('appointments');
-    if (stored) setAppointments(JSON.parse(stored));
-  }, []);
-
-  const handleBook = (e) => {
-    e.preventDefault();
-    const doctor = doctorsList.find(d => d.id === parseInt(form.doctorId));
-    if (!doctor) return;
-    const newAppt = { ...form, doctorName: doctor.name, specialty: doctor.specialty };
-    const updated = [...appointments, newAppt];
-    setAppointments(updated);
-    localStorage.setItem('appointments', JSON.stringify(updated));
-    setForm({ doctorId: '', date: '', time: '' });
+  // Utility function to fetch appointments by status
+  const fetchByStatus = async (status, setter) => {
+    const res = await fetch(`http://localhost:5000/api/appointments?status=${status}`);
+    const data = await res.json();
+    setter(Array.isArray(data) ? data : []);
   };
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-  const toggleNotificationDropdown = () => setNotificationDropdown(prev => !prev);
+  // Fetch appointments on mount
+  useEffect(() => {
+    fetchByStatus("pending", setPendingAppointments);
+    fetchByStatus("confirmed", setConfirmedAppointments);
+  }, []);
+
+  // Book appointment
+  const handleBook = async (e) => {
+    e.preventDefault();
+
+    // Ensure both date and time are selected before formatting
+    if (!form.date || !form.time) {
+      alert("Please select date and time.");
+      return;
+    }
+
+    // Pass ISO-formatted date string
+    const appointDate = `${form.date}T${form.time}:00`;
+
+    const newAppt = {
+      patientName: form.patientName,
+      appointDate,
+      symptoms: form.symptoms,
+    };
+
+    await fetch("http://localhost:5000/api/appointments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newAppt),
+    });
+
+    setForm({ patientName: "", date: "", time: "", symptoms: "" });
+
+    // Refresh both pending and confirmed lists
+    fetchByStatus("pending", setPendingAppointments);
+    fetchByStatus("confirmed", setConfirmedAppointments);
+  };
+
+  function toggleUserDropdown() {
+    setUserDropdown((prev) => !prev);
+  }
+  const toggleNotificationDropdown = () => setNotificationDropdown((prev) => !prev);
 
   return (
-
     <div className="flex min-h-screen bg-slate-800">
       {/* Sidebar */}
-      <div className="w-1/6"><Sidebar /></div>
+      <div className="w-1/6">
+        <Sidebar />
+      </div>
 
       {/* Main Content */}
       <div className="w-5/6 p-6">
@@ -45,9 +78,8 @@ const Appointments = () => {
           <div className="text-3xl font-bold bg-gradient-to-r from-blue-300 to-pink-500 text-transparent bg-clip-text">
             Appointments
           </div>
-
           <div className="flex items-center gap-4 relative">
-            {/* Notification Icon with dropdown */}
+            {/* Notifications */}
             <div className="relative">
               <div
                 className="cursor-pointer w-11 h-11 flex items-center justify-center bg-slate-900 hover:bg-gray-500 rounded-full transition"
@@ -60,12 +92,16 @@ const Appointments = () => {
               </div>
               {notificationDropdown && (
                 <div className="absolute right-0 mt-2 bg-gray-200 text-black w-60 rounded-lg shadow-lg overflow-hidden z-50">
-                  <div className="px-4 py-3 border-b border-gray-300 font-semibold">Notifications</div>
-                  <div className="px-4 py-2 hover:bg-white cursor-pointer text-sm">
-                    <span className="font-medium">Appointment Reminder:</span> You have an appointment tomorrow.
+                  <div className="px-4 py-3 border-b border-gray-300 font-semibold">
+                    Notifications
                   </div>
                   <div className="px-4 py-2 hover:bg-white cursor-pointer text-sm">
-                    <span className="font-medium">Lab Report Ready:</span> Your recent lab test result is available.
+                    <span className="font-medium">Appointment Reminder:</span>{" "}
+                    You have an appointment tomorrow.
+                  </div>
+                  <div className="px-4 py-2 hover:bg-white cursor-pointer text-sm">
+                    <span className="font-medium">Lab Report Ready:</span> Your
+                    recent lab test result is available.
                   </div>
                   <div className="px-4 py-2 hover:bg-white cursor-pointer text-sm text-gray-400">
                     No more notifications.
@@ -74,23 +110,26 @@ const Appointments = () => {
               )}
             </div>
 
-            {/* Profile Dropdown */}
+            {/* User Profile */}
             <div className="relative">
               <div
-                onClick={toggleDropdown}
+                onClick={toggleUserDropdown}
                 className="flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-gray-500 text-gray-300 rounded-2xl cursor-pointer transition shadow-xl"
               >
                 <i className="fa-solid fa-user text-white"></i>
                 <span className="hidden sm:block text-white">User</span>
-                <i className={`fa-solid fa-angle-${dropdownOpen ? "up" : "down"} text-white`}></i>
+                <i
+                  className={`fa-solid fa-angle-${userDropdown ? "up" : "down"} text-white`}
+                ></i>
               </div>
-
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-gray-200 text-black w-40 rounded-lg shadow-lg overflow-hidden z-50">
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">My Profile</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Change Photo</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Settings</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Logout</button>
+              {userDropdown && (
+                <div className="absolute right-0 mt-2 bg-gray-200 text-black w-44 rounded-lg shadow-lg overflow-hidden z-50">
+                  <button className="px-4 py-2 text-left w-full hover:bg-white">
+                    <NavLink to="/user/UserProfile">My Profile</NavLink>
+                  </button>
+                  <button className="px-4 py-2 text-left w-full hover:bg-white">
+                    Logout
+                  </button>
                 </div>
               )}
             </div>
@@ -99,63 +138,145 @@ const Appointments = () => {
 
         {/* Book Appointment Form */}
         <div className="bg-slate-900 p-6 rounded-xl shadow-md mb-8">
-          <h2 className="text-xl font-bold text-white mb-4">Book an Appointment</h2>
-          <form onSubmit={handleBook} className="flex flex-col md:flex-row gap-4 items-center">
-            <select
+          <h2 className="text-xl font-bold text-white mb-4">
+            Book an Appointment
+          </h2>
+          <form
+            onSubmit={handleBook}
+            className="flex flex-col md:flex-row gap-4 items-center"
+          >
+            <input
+              type="text"
               required
-              value={form.doctorId}
-              onChange={e => setForm({ ...form, doctorId: e.target.value })}
+              placeholder="Patient Name"
+              value={form.patientName}
+              onChange={(e) => setForm({ ...form, patientName: e.target.value })}
               className="p-2 rounded bg-slate-800 text-white flex-1"
-            >
-              <option value="">Select Doctor</option>
-              {doctorsList.map(d => (
-                <option key={d.id} value={d.id}>{d.name} ({d.specialty})</option>
-              ))}
-            </select>
+            />
 
             <div className="relative flex-1">
               <input
                 type="date"
                 required
+                className="p-2 pl-4 rounded bg-slate-800 text-white w-full"
                 value={form.date}
-                onChange={e => setForm({ ...form, date: e.target.value })}
-                className="p-2 rounded bg-slate-800 text-white w-full"
+                onChange={(e) => setForm({ ...form, date: e.target.value })}
               />
-              <i className="fa-solid fa-calendar text-white absolute right-3 top-2.5 pointer-events-none"></i>
+              <i
+                className="fa-solid fa-calendar text-white absolute right-3 top-2.5 cursor-pointer"
+                onClick={() =>
+                  document.querySelector('input[type="date"]').showPicker()
+                }
+              ></i>
             </div>
 
             <div className="relative flex-1">
               <input
                 type="time"
                 required
+                className="p-2 pl-4 rounded bg-slate-800 text-white w-full"
                 value={form.time}
-                onChange={e => setForm({ ...form, time: e.target.value })}
-                className="p-2 rounded bg-slate-800 text-white w-full"
+                onChange={(e) => setForm({ ...form, time: e.target.value })}
               />
-              <i className="fa-solid fa-clock text-white absolute right-3 top-2.5 pointer-events-none"></i>
+              <i
+                className="fa-solid fa-clock text-white absolute right-3 top-2.5 cursor-pointer"
+                onClick={() =>
+                  document.querySelector('input[type="time"]').showPicker()
+                }
+              ></i>
             </div>
 
-            <button type="submit" className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded transition">
+            <input
+              type="text"
+              required
+              placeholder="Enter symptoms"
+              value={form.symptoms}
+              onChange={(e) => setForm({ ...form, symptoms: e.target.value })}
+              className="p-2 rounded bg-slate-800 text-white flex-1"
+            />
+
+            <button
+              type="submit"
+              className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded transition"
+            >
               Book
             </button>
           </form>
         </div>
 
-        {/* Upcoming Appointments */}
-        <div>
-          <h2 className="text-xl font-bold text-white mb-4">Upcoming Appointments</h2>
+        {/* Pending Appointments */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-pink-300 mb-4">
+            Pending Appointments
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {appointments.length === 0 && <p className="text-gray-300">No appointments booked.</p>}
-            {appointments.map((a, idx) => (
-              <div key={idx} className="bg-slate-700 p-4 rounded-xl shadow-md text-white flex items-center gap-4 transition hover:scale-105">
-                <div className="w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-pink-500">
+            {pendingAppointments.length === 0 && (
+              <p className="text-gray-300">No pending appointments.</p>
+            )}
+            {pendingAppointments.map((a) => (
+              <div
+                key={a._id}
+                className="bg-slate-700 p-4 rounded-xl shadow-md text-white flex items-center gap-4 transition hover:scale-105"
+              >
+                <div className="w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-pink-400">
                   <i className="fa-solid fa-user-doctor text-white text-2xl"></i>
                 </div>
                 <div>
-                  <p className="font-semibold">{a.doctorName}</p>
-                  <p className="text-gray-300">{a.specialty}</p>
-                  <p><strong>Date:</strong> {a.date}</p>
-                  <p><strong>Time:</strong> {a.time}</p>
+                  <p className="font-semibold">Patient: {a.patientName}</p>
+                  <p>Symptoms: {a.symptoms}</p>
+                  <p>
+                    <i className="fa-solid fa-calendar text-white mr-2"></i>
+                    Date: {new Date(a.appointDate).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <i className="fa-solid fa-clock text-white mr-2"></i>
+                    Time:{" "}
+                    {new Date(a.appointDate).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Confirmed Appointments */}
+        <div>
+          <h2 className="text-xl font-bold text-pink-300 mb-4">
+            Confirmed Appointments
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {confirmedAppointments.length === 0 && (
+              <p className="text-gray-300">No confirmed appointments.</p>
+            )}
+            {confirmedAppointments.map((a) => (
+              <div
+                key={a._id}
+                className="bg-slate-700 p-4 rounded-xl shadow-md text-white flex items-center gap-4 transition hover:scale-105"
+              >
+                <div className="w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-pink-400">
+                  <i className="fa-solid fa-user-doctor text-white text-2xl"></i>
+                </div>
+                <div>
+                  <p className="font-semibold">Patient: {a.patientName}</p>
+                  <p>Symptoms: {a.symptoms}</p>
+                  <p>
+                    <i className="fa-solid fa-calendar text-white mr-2"></i>
+                    Date: {new Date(a.appointDate).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <i className="fa-solid fa-clock text-white mr-2"></i>
+                    Time:{" "}
+                    {new Date(a.appointDate).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                  <p className="text-pink-300">
+                    Assigned Doctor: {a.doctorName || "Pending Assignment"}
+                  </p>
                 </div>
               </div>
             ))}

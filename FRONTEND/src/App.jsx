@@ -26,6 +26,7 @@ import Prescription from './Patient/Prescription/Prescription';
 import Insurance from './Patient/Insurance/Insurance';
 import BillingPayment from './Patient/BillingPayement/BillingPayment';
 import LabRecord from './Patient/LabRecord/LabRecord';
+import UserProfile from './Patient/UserProfile';
 import About from './Home/About';
 import Benefit from './Home/Benefits';
 import Contact from './Home/Contact';
@@ -56,6 +57,7 @@ function App() {
           <Route path='/Terms' element={<Terms />}></Route>
           {/*Patient page*/} 
           <Route path='/user' element={<UserPanel />}></Route>
+          <Route path='/user/UserProfile' element={<UserProfile />}></Route>
           <Route path='/user/Appointment' element={<Appointment/>}></Route>
           <Route path='/user/Prescription' element={<Prescription/>}></Route>
           <Route path='/user/LabReport' element={<LabRecord/>}></Route>
