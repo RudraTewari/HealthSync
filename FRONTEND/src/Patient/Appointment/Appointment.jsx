@@ -14,49 +14,57 @@ const Appointments = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
-  // Utility function to fetch appointments by status
+  // Utility: fetch appointments by status for this patient
   const fetchByStatus = async (status, setter) => {
-    const res = await fetch(`http://localhost:5000/api/appointments?status=${status}`);
-    const data = await res.json();
-    setter(Array.isArray(data) ? data : []);
+    if (!form.patientName) return; // only fetch if patient name is filled
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/appointments?status=${status}&patientName=${form.patientName}`
+      );
+      const data = await res.json();
+      setter(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error fetching appointments:", err);
+    }
   };
 
-  // Fetch appointments on mount
+  // Fetch appointments whenever patientName changes
   useEffect(() => {
-    fetchByStatus("pending", setPendingAppointments);
-    fetchByStatus("confirmed", setConfirmedAppointments);
-  }, []);
+    if (form.patientName) {
+      fetchByStatus("Pending", setPendingAppointments);
+      fetchByStatus("Confirmed", setConfirmedAppointments);
+    }
+  }, [form.patientName]);
 
   // Book appointment
   const handleBook = async (e) => {
     e.preventDefault();
 
-    // Ensure both date and time are selected before formatting
     if (!form.date || !form.time) {
       alert("Please select date and time.");
       return;
     }
 
-    // Pass ISO-formatted date string
     const appointDate = `${form.date}T${form.time}:00`;
 
     const newAppt = {
       patientName: form.patientName,
       appointDate,
+      appointTime: form.time,
       symptoms: form.symptoms,
     };
 
-    await fetch("http://localhost:5000/api/appointments", {
+    await fetch("http://localhost:5000/api/addappointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAppt),
     });
 
-    setForm({ patientName: "", date: "", time: "", symptoms: "" });
+    setForm({ ...form, date: "", time: "", symptoms: "" });
 
-    // Refresh both pending and confirmed lists
-    fetchByStatus("pending", setPendingAppointments);
-    fetchByStatus("confirmed", setConfirmedAppointments);
+    // Refresh both lists
+    fetchByStatus("Pending", setPendingAppointments);
+    fetchByStatus("Confirmed", setConfirmedAppointments);
   };
 
   function toggleUserDropdown() {
@@ -171,20 +179,22 @@ const Appointments = () => {
             </div>
 
             <div className="relative flex-1">
-              <input
-                type="time"
+              <select
                 required
-                className="p-2 pl-4 rounded bg-slate-800 text-white w-full"
+                className="p-2 rounded bg-slate-800 text-white w-full"
                 value={form.time}
                 onChange={(e) => setForm({ ...form, time: e.target.value })}
-              />
-              <i
-                className="fa-solid fa-clock text-white absolute right-3 top-2.5 cursor-pointer"
-                onClick={() =>
-                  document.querySelector('input[type="time"]').showPicker()
-                }
-              ></i>
+              >
+                <option value="">Select Time</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="18:00">6:00 PM</option>
+              </select>
             </div>
+
 
             <input
               type="text"
