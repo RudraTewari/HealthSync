@@ -6,8 +6,8 @@ const invoiceSchema = new mongoose.Schema({
     InvoiceDate:{type:Date,required:true},
     Amount:{type:Number,required:true},
     Balance:{type:Number,required:true},
-    InvoiceStatus: { type: String, enum: ["paid", "partial","unpaid"],required:true },
-    InsuranceStatus:{type:String,enum:["approved","pending","not_submitted"],required:true}
+    InvoiceStatus: { type: String, enum: ["Paid", "Partial Paid","Unpaid"],required:true },
+    InsuranceStatus:{type:String,enum:["Approved","Pending","UnSubmitted"],required:true}
 
 },{ timestamps: true }
 );

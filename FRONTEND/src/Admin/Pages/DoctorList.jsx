@@ -74,11 +74,11 @@ const DoctorDashboard = () => {
                 key={doc.id}
                 className="w-full grid grid-cols-[20%_20%_15%_15%_30%] border-b border-gray-800 py-4 text-sm text-gray-300 hover:bg-slate-800 transition-all duration-300"
               >
-                <div className="px-4 text-left">{doc.name}</div>
-                <div className="px-4 text-left">{doc.specialty}</div>
-                <div className="px-4 text-left">{doc.position}</div>
-                <div className="px-4 text-left">{doc.experience} yrs</div>
-                <div className="px-4 text-left">{doc.contact}</div>
+                <div className="px-4 text-left text-[15px] font-semibold">{doc.name}</div>
+                <div className="px-4 text-left text-[15px] font-semibold">{doc.specialty}</div>
+                <div className="px-4 text-left text-[15px] font-semibold">{doc.position}</div>
+                <div className="px-4 text-left text-[15px] font-semibold">{doc.experience} yrs</div>
+                <div className="px-4 text-left text-[15px] font-semibold">{doc.contact}</div>
               </div>
             ))
           ) : (

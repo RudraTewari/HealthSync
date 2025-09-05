@@ -23,17 +23,18 @@ const createAppointment = async (req, res) => {
 const getAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find().select(
-      "patientName doctorName appointDate appointTime symptoms status"
+      "patientId patientName doctorName appointDate appointTime symptoms status"
     );
 
     // Map data to frontend-friendly structure
     const formattedAppointments = appointments.map((app) => ({
-      patient: app.patientName,
-      doctor: app.doctorName,
-      date: app.appointDate ? new Date(app.appointDate).toLocaleDateString() : "",
-      time: app.appointTime || "", // use the separate time field
-      symptoms: app.symptoms || "",
-      status: app.status,
+      patientid : app.patientId,
+      patient : app.patientName,
+      doctor : app.doctorName,
+      date : app.appointDate ? new Date(app.appointDate).toLocaleDateString() : "",
+      time : app.appointTime || "", // use the separate time field
+      symptoms : app.symptoms || "",
+      status : app.status,
     }));
 
     res.json(formattedAppointments);

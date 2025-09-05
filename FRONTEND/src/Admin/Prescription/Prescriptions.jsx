@@ -84,12 +84,12 @@ const Prescriptions = () => {
             prescriptions.map((pres, index) => (
               <div
                 key={index}
-                className="w-full grid grid-cols-[20%_15%_10%_25%] justify-evenly border-b border-gray-800 hover:bg-slate-600 hover:text-slate-300 transition-all duration-300 py-5 text-sm text-gray-300"
+                className="w-full grid grid-cols-[20%_15%_10%_25%] justify-evenly border-b border-gray-800 hover:bg-slate-800 hover:text-slate-300 transition-all duration-300 py-5 text-sm text-gray-300"
               >
-                <div>{pres.patientName}</div>
-                <div>{pres.doctorName}</div>
-                <div>{pres.date}</div>
-                <div className="flex flex-col gap-1">
+                <div className="text-[15px] font-semibold">{pres.patientName}</div>
+                <div className="text-[15px] font-semibold">{pres.doctorName}</div>
+                <div className="text-[15px] font-semibold">{pres.date}</div>
+                <div className="flex flex-col gap-1 text-[15px] font-semibold">
                   {pres.medications && pres.medications.length > 0 ? (
                     pres.medications.map((med, i) => <p key={i}>{med}</p>)
                   ) : (

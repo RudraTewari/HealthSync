@@ -76,15 +76,21 @@ const InvoiceHistory = () => {
               invoices.map((invoice) => (
                 <div
                   key={invoice._id}
-                  className="w-full grid grid-cols-[10%_20%_10%_10%_15%_15%_20%] border-b border-gray-800 py-5 text-sm text-gray-300 hover:bg-slate-600 hover:text-slate-300 transition-all duration-300"
+                  className="w-full grid grid-cols-[10%_20%_10%_10%_15%_15%_20%] border-b border-gray-800 py-5 text-sm text-gray-300 hover:bg-slate-800 hover:text-slate-300 transition-all duration-300"
                 >
-                  <div className="text-center">{invoice.invoiceNumber}</div>
-                  <div className="text-center">{invoice.patientName}</div>
-                  <div className="text-center">{invoice.date}</div>
-                  <div className="text-center">${invoice.amount}</div>
-                  <div className="text-center">${invoice.balance}</div>
-                  <div className="text-center">{invoice.status}</div>
-                  <div className="text-center">{invoice.insurance}</div>
+                  <div className="text-center text-[15px] font-semibold">{invoice.invNumber}</div>
+                  <div className="text-center text-[15px] font-semibold">{invoice.patient}</div>
+                  <div className="text-center text-[15px] font-semibold">{invoice.date}</div>
+                  <div className="text-center text-[15px] font-semibold">${invoice.amount}</div>
+                  <div className="text-center text-[15px] font-semibold">${invoice.balance}</div>
+                  <div className={` text-[15px] text-center font-semibold 
+                      ${invoice.invStatus=="Paid" ? " text-green-600 ":""} 
+                      ${invoice.invStatus=="Partial Paid" ? " text-amber-500   ":""}
+                      ${invoice.invStatus=="Unpaid" ? " text-red-700   ":""} `}>{invoice.invStatus}</div>
+                  <div className={`text-center text-[15px] font-semibold
+                      ${invoice.insStatus=="Approved" ? "text-green-600 ":""} 
+                      ${invoice.insStatus=="Pending" ? "text-yellow-500  ":""}
+                      ${invoice.insStatus=="UnSubmitted" ? "text-red-700 ":""} `}>{invoice.insStatus}</div>
                 </div>
               ))
             ) : (

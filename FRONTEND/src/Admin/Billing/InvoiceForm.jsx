@@ -138,15 +138,15 @@ const InvoiceForm = () => {
           render={({ field }) => (
             <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col gap-3 mb-2">
               <div className="flex items-center gap-3">
-                <RadioGroupItem value="paid" />
-                <Label className='text-white'>Paid</Label>
+                <RadioGroupItem value="Paid" className="border border-gray-400 rounded-full bg-white"/>
+                <Label className='text-white '>Paid</Label>
               </div>
               <div className="flex items-center gap-3">
-                <RadioGroupItem value="partial" />
+                <RadioGroupItem value="Partial Paid" className="border border-gray-400 rounded-full bg-white"/>
                 <Label className='text-white'>Partially Paid</Label>
               </div>
               <div className="flex items-center gap-3">
-                <RadioGroupItem value="unpaid" />
+                <RadioGroupItem value="Unpaid" className="border border-gray-400 rounded-full bg-white"/>
                 <Label className='text-white'>Unpaid</Label>
               </div>
             </RadioGroup>
@@ -165,15 +165,15 @@ const InvoiceForm = () => {
           render={({ field }) => (
             <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col gap-3 mb-2">
               <div className="flex items-center gap-3">
-                <RadioGroupItem value="approved" />
+                <RadioGroupItem value="Approved" className="border border-gray-400 rounded-full bg-white"/>
                 <Label className='text-white'>Approved</Label>
               </div>
               <div className="flex items-center gap-3">
-                <RadioGroupItem value="pending" />
+                <RadioGroupItem value="Pending" className="border border-gray-400 rounded-full bg-white"/>
                 <Label className='text-white'>Pending</Label>
               </div>
               <div className="flex items-center gap-3">
-                <RadioGroupItem value="not_submitted" />
+                <RadioGroupItem value="UnSubmitted" className="border border-gray-400 rounded-full bg-white"/>
                 <Label className='text-white'>Not Submitted</Label>
               </div>
             </RadioGroup>

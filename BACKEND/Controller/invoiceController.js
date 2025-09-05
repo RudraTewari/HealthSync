@@ -11,4 +11,27 @@ const createInvoice = async (req, res) => {
   }
 };
 
-module.exports={createInvoice};
+const getInvoices = async(req,res)=>{
+  try{
+    const invoices = await Invoice.find().select(
+      "InvoiceNumber CustomerName InvoiceDate  Amount  Balance InvoiceStatus InsuranceStatus"
+    );
+
+    const formattedInvoices = invoices.map((inv) =>({
+      invNumber:inv.InvoiceNumber,
+      patient:inv.CustomerName,
+      date:inv.InvoiceDate ? new Date(inv.InvoiceDate).toLocaleDateString() : "",
+      amount:inv.Amount,
+      balance:inv.Balance,
+      invStatus:inv.InvoiceStatus,
+      insStatus:inv.InsuranceStatus,
+    }));
+    res.json(formattedInvoices);
+  }
+  catch(err){
+    console.error("Error fteching Invoices:",err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+module.exports={createInvoice , getInvoices};

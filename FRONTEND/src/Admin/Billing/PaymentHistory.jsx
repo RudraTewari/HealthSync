@@ -88,7 +88,7 @@ const PaymentHistory = () => {
               {payments.map((payment, index) => (
                 <div
                   key={index}
-                  className="w-full grid grid-cols-[10%_20%_10%_10%_15%_15%_20%] justify-evenly border-b border-gray-800 hover:bg-slate-600 hover:text-slate-300 transition-all duration-300 py-5 text-sm text-gray-300"
+                  className="w-full grid grid-cols-[10%_20%_10%_10%_15%_15%_20%] justify-evenly border-b border-gray-800 hover:bg-slate-800 hover:text-slate-300 transition-all duration-300 py-5 text-sm text-gray-300"
                 >
                   <div className="text-center">{payment.id}</div>
                   <div className="text-center">{payment.patientName}</div>
