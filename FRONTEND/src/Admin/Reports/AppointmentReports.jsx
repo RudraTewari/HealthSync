@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../Sidebar";
+import { NavLink } from "react-router-dom";
+import AdminProfile from "../AdminProfile";
 
 
 const AppointmentReports = () => {
@@ -18,9 +20,10 @@ const AppointmentReports = () => {
             <button className="text-[15px] text-gray-300 hover:scale-110">
               <i className="fas fa-bell text-gray-300"></i>
             </button>
-            <button className="h-10 w-36 text-[15px] text-amber-100 font-semibold bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in">
-              <i className="fas fa-user mr-2.5"></i>User Profile
-            </button>
+            <NavLink to="/Admin/AdminProfile" className="h-10 w-36 flex flex-wrap bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in">
+                <i className="fas fa-user mr-2.5 text-white ml-2 mt-2.5"></i>
+                <h2 className="text-[15px] text-white mt-2">Admin Profile</h2>
+              </NavLink>
           </div>
           <div className="flex flex-col justify-start  gap-2 mt-5 ml-8">
             <span className='text-[34px] text-gray-400 font-bold '>Appointment Reports</span>

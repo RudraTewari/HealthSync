@@ -4,6 +4,7 @@ import CustomChart from './CustomChart';
 import { useState } from 'react';
 import CustomDocStatus from './CustomDocStatus';
 import CustomAppointment from './CustomAppointment';
+import AdminProfile from './AdminProfile';
 
 const chartData = [
   { date: '2025-07-01', newPatients: 5, earnings: 1000, Revenue: 1200, Tests: 20 },
@@ -80,10 +81,11 @@ const Body = () => {
               <button className='text-[15px] text-gray-300 hover:scale-110'>
                 <i className='fas fa-bell text-gray-300'></i>
               </button>
-              <button className="h-10 w-36 text-[15px] text-amber-100 font-semibold bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in">
-                <i className="fas fa-user mr-2.5"></i>User Profile
-              </button>
-            </div>
+              <NavLink to="/Admin/AdminProfile" className="h-10 w-36 flex flex-wrap bg-slate-900 border-2 border-slate-900 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in">
+                <i className="fas fa-user mr-2.5 text-white ml-2 mt-2.5"></i>
+                <h2 className="text-[15px] text-white mt-2">Admin Profile</h2>
+              </NavLink>
+        </div>
 
         <h1 className=' text-[30px] text-gray-300 mt-10 mx-7 font-semibold'><i className='fas fa-home mr-2'></i> Dashboard</h1>
 

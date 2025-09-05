@@ -36,6 +36,7 @@ import Testinomial from './Home/Testimonials';
 import Help from './Home/Help';
 import Terms from './Home/Terms';
 import Privacy from './Home/Privacy';
+import AdminProfile from './Admin/AdminProfile';
 
 function App() {
   
@@ -65,6 +66,7 @@ function App() {
           <Route path='/user/Insurance' element={<Insurance/>}></Route>
           {/*Admin page*/} 
           <Route path='/admin' element={<AdminPanel />}></Route>
+          <Route path='/Admin/AdminProfile' element={<AdminProfile/>}></Route>
           <Route path='/Pages/DoctorList' element={<DoctorList/>}></Route> 
           <Route path='/Pages/AddDoctor' element={<AddDoctor/>}></Route>
           <Route path='/Records/HealthRecords' element={<HealthRecords/>}></Route>
