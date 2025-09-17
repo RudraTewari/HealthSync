@@ -1,8 +1,13 @@
-import React from 'react'
-import Sidebar from './Sidebar'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import Sidebar from './Sidebar';
 
 const AdminProfile = () => {
+  // Logout function
+  const handleLogout = () => {
+    localStorage.clear(); // Clear all stored user data
+    window.location.href = '/'; // Redirect to home page
+  };
+
   return (
     <>
       <div className='w-full min-h-screen items-stretch'>
@@ -19,20 +24,23 @@ const AdminProfile = () => {
               <button className="text-[15px] text-gray-300 hover:scale-110">
                 <i className="fas fa-bell text-gray-300"></i>
               </button>
-              <NavLink to="" className="h-10 w-36 text-center bg-red-900 border-2 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in">
+              <button
+                onClick={handleLogout}
+                className="h-10 w-36 text-center bg-red-900 border-2 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in"
+              >
                 <h2 className="text-[15px] text-white my-2 ">Logout</h2>
-              </NavLink>
+              </button>
             </div>
-            <h1 className="text-[30px] text-gray-400 mt-6 ml-6 font-semibold ">Admin Profile</h1>
-            <div className="col-span-6 bg-slate-950 ">
+
+            <h1 className="text-[30px] text-gray-400 mt-6 ml-6 font-semibold">Admin Profile</h1>
+            <div className="col-span-6 bg-slate-950">
               <h1></h1>
             </div>
           </div>
-          
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AdminProfile
+export default AdminProfile;

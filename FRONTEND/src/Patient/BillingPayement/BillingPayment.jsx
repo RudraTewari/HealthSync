@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar";
+import UserDropdown from "../UserProfile/UserDropdown";
 
 const billCategories = ["Consultation", "Lab Test", "Medicine", "Other"];
 const paymentMethods = ["Credit Card", "UPI", "Wallet"];
@@ -93,25 +94,7 @@ const BillingPayment = () => {
             </div>
 
             {/* Profile Dropdown */}
-            <div className="relative">
-              <div
-                onClick={toggleDropdown}
-                className="flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-gray-500 text-gray-300 rounded-2xl cursor-pointer transition shadow-xl"
-              >
-                <i className="fa-solid fa-user text-white"></i>
-                <span className="hidden sm:block text-white">User</span>
-                <i className={`fa-solid fa-angle-${dropdownOpen ? "up" : "down"} text-white`}></i>
-              </div>
-
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-gray-200 text-black w-40 rounded-lg shadow-lg overflow-hidden z-50">
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">My Profile</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Change Photo</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Settings</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Logout</button>
-                </div>
-              )}
-            </div>
+            <UserDropdown /> {/* replaced hardcoded dropdown */}
           </div>
         </div>
 

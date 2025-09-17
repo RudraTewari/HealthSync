@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import UserDropdown from './UserProfile/UserDropdown'; // import the new dropdown
 
 const Body = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
   // Mock summary data for preview in dashboard cards
   const [upcomingAppointments, setUpcomingAppointments] = useState([
     { id: 1, doctor: "Dr. Vikram Singh", date: "2025-08-20", time: "11:00 AM" },
@@ -23,7 +22,7 @@ const Body = () => {
   const [activeInsurancePlansCount, setActiveInsurancePlansCount] = useState(1);
 
   return (
-    <div className="flex min-h-screen bg-slate-800  ">
+    <div className="flex min-h-screen bg-slate-800">
       {/* Main Content */}
       <div className="flex-1 p-6">
         {/* Top Navbar */}
@@ -43,25 +42,7 @@ const Body = () => {
             </div>
 
             {/* Profile Dropdown */}
-            <div className="relative">
-              <div
-                className="flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-gray-500 text-gray-300 rounded-2xl cursor-pointer transition shadow-xl"
-                onClick={() => setDropdownOpen(prev => !prev)}
-              >
-                <i className="fa-solid fa-user text-white"></i>
-                <span className="hidden sm:block text-white">User</span>
-                <i className={`fa-solid fa-angle-${dropdownOpen ? "up" : "down"} text-white`}></i>
-              </div>
-
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 flex flex-col bg-gray-200 text-black w-40 rounded-lg shadow-lg overflow-hidden z-50">
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">My Profile</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Change Photo</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Settings</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Logout</button>
-                </div>
-              )}
-            </div>
+            <UserDropdown /> {/* replaced hardcoded dropdown */}
           </div>
         </div>
 
@@ -84,7 +65,7 @@ const Body = () => {
               <h2 className="text-xl font-bold">Appointments</h2>
               {upcomingAppointments.length > 0 ? (
                 <p className="mt-2 text-sm">
-                  Next: {upcomingAppointments[0].date} at {upcomingAppointments.time} with {upcomingAppointments.doctor}
+                  Next: {upcomingAppointments[0].date} at {upcomingAppointments[0].time} with {upcomingAppointments[0].doctor}
                 </p>
               ) : (
                 <p className="mt-2 text-sm text-gray-400">No upcoming appointments</p>

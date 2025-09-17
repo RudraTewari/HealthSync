@@ -1,10 +1,52 @@
 // HomePage.jsx
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "../assets/ChatGPT Image Jul 28, 2025, 07_48_37 PM.png";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  // grab current auth state
+  const role = localStorage.getItem("role");
+  const isVerified = localStorage.getItem("isAccountVerified") === "true";
+
+  const goPatient = () => {
+    if (role && isVerified) {
+      if (role !== "patient") {
+        navigate("/message", {
+          state: {
+            message:
+              "Only patients can access the Patient Section. Redirecting to Home.",
+            redirectTo: "/",
+          },
+        });
+      } else {
+        navigate("/user");
+      }
+    } else {
+      navigate("/login", { state: { redirectTo: "/user" } });
+    }
+  };
+
+  const goAdmin = () => {
+    if (role && isVerified) {
+      if (role !== "admin") {
+        navigate("/message", {
+          state: {
+            message:
+              "Only admins can access the Admin Section. Redirecting to Home.",
+            redirectTo: "/",
+          },
+        });
+      } else {
+        navigate("/admin");
+      }
+    } else {
+      navigate("/login", { state: { redirectTo: "/admin" } });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 relative overflow-hidden">
 
@@ -28,7 +70,6 @@ const HomePage = () => {
 
       {/* ================= HERO ================= */}
       <section className="flex-1 flex flex-col items-center justify-center text-center px-6 z-10 relative">
-
         {/* Floating Shapes */}
         <motion.div className="absolute w-4 h-4 bg-cyan-400 rounded-full top-10 left-10 opacity-40"
           animate={{ x: [0, 200, 0], y: [0, 100, 0] }}
@@ -68,12 +109,12 @@ const HomePage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1, duration: 0.5 }}
           >
-            <NavLink
-              to="/user"
+            <button
+              onClick={goPatient}
               className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-6 py-3 rounded-lg shadow-lg hover:from-emerald-400 hover:to-cyan-400 transition-transform transform hover:scale-105"
             >
               Patient Section
-            </NavLink>
+            </button>
           </motion.div>
 
           <motion.div
@@ -81,12 +122,12 @@ const HomePage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.2, duration: 0.5 }}
           >
-            <NavLink
-              to="/Admin"
+            <button
+              onClick={goAdmin}
               className="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-lg shadow-lg hover:from-rose-400 hover:to-pink-400 transition-transform transform hover:scale-105"
             >
               Admin Section
-            </NavLink>
+            </button>
           </motion.div>
         </div>
       </section>
@@ -94,13 +135,17 @@ const HomePage = () => {
       {/* ================= FOOTER ================= */}
       <footer className="bg-slate-900 text-gray-400 py-6 z-10 relative">
         <div className="max-w-7xl mx-auto grid grid-cols-3 items-center">
-          <div className="text-sm">© {new Date().getFullYear()} E-Health Record Platform. All rights reserved.</div>
+          <div className="text-sm">
+            © {new Date().getFullYear()} E-Health Record Platform. All rights reserved.
+          </div>
           <div className="flex justify-center space-x-6 px-6">
             <NavLink to="/Privacy" className="hover:text-cyan-400">Privacy Policy</NavLink>
             <NavLink to="/Terms" className="hover:text-emerald-400">Terms of Service</NavLink>
             <NavLink to="/Help" className="hover:text-rose-400">Help</NavLink>
           </div>
-          <div className="text-sm text-gray-500 italic text-right px-6">Created by <span className="text-cyan-400 font-medium">DEVANTIX</span></div>
+          <div className="text-sm text-gray-500 italic text-right px-6">
+            Created by <span className="text-cyan-400 font-medium">DEVANTIX</span>
+          </div>
         </div>
       </footer>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Sidebar from "../Sidebar";
+import UserDropdown from "../UserProfile/UserDropdown";
 
 const Appointments = () => {
   const [pendingAppointments, setPendingAppointments] = useState([]);
@@ -118,29 +119,8 @@ const Appointments = () => {
               )}
             </div>
 
-            {/* User Profile */}
-            <div className="relative">
-              <div
-                onClick={toggleUserDropdown}
-                className="flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-gray-500 text-gray-300 rounded-2xl cursor-pointer transition shadow-xl"
-              >
-                <i className="fa-solid fa-user text-white"></i>
-                <span className="hidden sm:block text-white">User</span>
-                <i
-                  className={`fa-solid fa-angle-${userDropdown ? "up" : "down"} text-white`}
-                ></i>
-              </div>
-              {userDropdown && (
-                <div className="absolute right-0 mt-2 bg-gray-200 text-black w-44 rounded-lg shadow-lg overflow-hidden z-50">
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">
-                    <NavLink to="/user/UserProfile">My Profile</NavLink>
-                  </button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
+            {/* Profile Dropdown */}
+            <UserDropdown /> {/* replaced hardcoded dropdown */}
           </div>
         </div>
 

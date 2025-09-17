@@ -37,7 +37,12 @@ const Sidebar = () => {
       <div className='w-full h-full bg-slate-950 flex flex-col'>
         {/* Sidebar Top */}
         <div className='w-full rounded-b-lg'>
-          <img src={Logo} alt={Logo} width={125} height={80} className=' rounded-2xl mx-auto mt-6  hover:scale-110 transition-all duration-500 ease-in '></img>
+          <NavLink to="/">
+                  <div className="flex justify-center mt-4  mb-2">
+                    <img src={Logo} alt={Logo} width={125} height={80} className=' rounded-2xl mx-auto mt-6  hover:scale-110 transition-all duration-500 ease-in '></img>
+                  </div>
+          </NavLink>
+          
           <p className='text-2xl text-[#F8F3CE] text-center mt-1 py-4 font-bold '> Welcome Admin</p>
         </div>
         {/* Sidebar Bottom */}

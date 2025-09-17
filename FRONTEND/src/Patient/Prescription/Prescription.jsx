@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar';
+import UserDropdown from '../UserProfile/UserDropdown'; // import your new dropdown
 
 const Prescription = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [form, setForm] = useState({ medicine: '', dosage: '', doctor: '', date: '' });
   const [doctorDropdown, setDoctorDropdown] = useState(false);
-  const [userDropdown, setUserDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
   const doctorsList = [
@@ -27,7 +27,6 @@ const Prescription = () => {
     setForm({ medicine: '', dosage: '', doctor: '', date: '' });
   };
 
-  const toggleUserDropdown = () => setUserDropdown(prev => !prev);
   const toggleNotificationDropdown = () => setNotificationDropdown(prev => !prev);
 
   return (
@@ -37,7 +36,9 @@ const Prescription = () => {
 
         {/* Header */}
         <div className="flex justify-between items-center h-20 bg-slate-900 px-6 mb-6 shadow-lg rounded-xl">
-          <div className="text-3xl font-bold bg-gradient-to-r from-blue-300 to-pink-500 text-transparent bg-clip-text">Prescriptions</div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-blue-300 to-pink-500 text-transparent bg-clip-text">
+            Prescriptions
+          </div>
           <div className="flex items-center gap-4 relative">
 
             {/* Notification Icon with dropdown */}
@@ -65,25 +66,8 @@ const Prescription = () => {
               )}
             </div>
 
-            {/* User Profile */}
-            <div className="relative">
-              <div
-                onClick={toggleUserDropdown}
-                className="flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-gray-500 text-gray-300 rounded-2xl cursor-pointer transition shadow-xl"
-              >
-                <i className="fa-solid fa-user text-white"></i>
-                <span className="hidden sm:block text-white">User</span>
-                <i className={`fa-solid fa-angle-${userDropdown ? "up" : "down"} text-white`}></i>
-              </div>
-              {userDropdown && (
-                <div className="absolute right-0 mt-2 bg-gray-200 text-black w-44 rounded-lg shadow-lg overflow-hidden z-50">
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">My Profile</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Change Photo</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Settings</button>
-                  <button className="px-4 py-2 text-left w-full hover:bg-white">Logout</button>
-                </div>
-              )}
-            </div>
+            {/* User Dropdown */}
+            <UserDropdown />  {/* Reusable dropdown component */}
           </div>
         </div>
 
@@ -92,7 +76,6 @@ const Prescription = () => {
           <h2 className="text-xl font-bold text-white mb-4">Add Prescription</h2>
           <form onSubmit={handleAdd} className="flex flex-col md:flex-row gap-4 items-center">
 
-            {/* Medicine */}
             <input
               type="text"
               required
@@ -102,7 +85,6 @@ const Prescription = () => {
               onChange={e => setForm({ ...form, medicine: e.target.value })}
             />
 
-            {/* Dosage */}
             <input
               type="text"
               required
@@ -112,7 +94,6 @@ const Prescription = () => {
               onChange={e => setForm({ ...form, dosage: e.target.value })}
             />
 
-            {/* Doctor Dropdown */}
             <div className="relative flex-1">
               <button
                 type="button"
@@ -137,7 +118,6 @@ const Prescription = () => {
               )}
             </div>
 
-            {/* Date */}
             <div className="relative flex-1">
               <input
                 type="date"
@@ -152,7 +132,6 @@ const Prescription = () => {
               ></i>
             </div>
 
-            {/* Add Button */}
             <button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition">
               Add
             </button>
