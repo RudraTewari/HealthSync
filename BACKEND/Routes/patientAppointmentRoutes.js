@@ -1,16 +1,14 @@
-// BACKEND/Routes/patientAppointmentRoutes.js
 const express = require("express");
 const router = express.Router();
-
 const {
   createPatientAppointment,
-  getPatientAppointments,
-} = require("../Controller/patientAppointmentController.js");
+  getPatientAppointments
+} = require("../Controller/patientAppointmentController");
 
-// User creates a pending appointment
-router.post("/patient-appointments", createPatientAppointment);
+// POST route to create a new patient appointment
+router.post("/add", createPatientAppointment);
 
-// User fetches only their own appointments (filtered by name & optional status)
-router.get("/patient-appointments", getPatientAppointments);
+// GET route to fetch appointments for a specific patient by name
+router.get("/", getPatientAppointments);
 
 module.exports = router;

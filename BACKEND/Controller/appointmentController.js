@@ -1,10 +1,10 @@
 const Appointment = require("../Schema/appointmentSchema.js");
 
+// Create a new appointment (no changes)
 const createAppointment = async (req, res) => {
   try {
     console.log("Received appointment data:", req.body);
 
-    // Optional: You can validate required fields manually
     const { patientId, patientName, doctorName, appointDate } = req.body;
     if (!patientId || !patientName || !doctorName || !appointDate) {
       return res.status(400).json({ error: "All required fields must be filled." });
@@ -20,21 +20,29 @@ const createAppointment = async (req, res) => {
   }
 };
 
+// ✅ Get appointments, optionally filter by patientName
 const getAppointments = async (req, res) => {
   try {
-    const appointments = await Appointment.find().select(
+    const { patientName } = req.query;
+
+    let filter = {};
+    if (patientName) {
+      // Case-insensitive filtering
+      filter.patientName = { $regex: new RegExp("^" + patientName + "$", "i") };
+    }
+
+    const appointments = await Appointment.find(filter).select(
       "patientId patientName doctorName appointDate appointTime symptoms status"
     );
 
-    // Map data to frontend-friendly structure
     const formattedAppointments = appointments.map((app) => ({
-      patientid : app.patientId,
-      patient : app.patientName,
-      doctor : app.doctorName,
-      date : app.appointDate ? new Date(app.appointDate).toLocaleDateString() : "",
-      time : app.appointTime || "", // use the separate time field
-      symptoms : app.symptoms || "",
-      status : app.status,
+      patientid: app.patientId,
+      patient: app.patientName,
+      doctor: app.doctorName,
+      date: app.appointDate ? new Date(app.appointDate).toLocaleDateString() : "",
+      time: app.appointTime || "",
+      symptoms: app.symptoms || "",
+      status: app.status,
     }));
 
     res.json(formattedAppointments);
@@ -44,4 +52,4 @@ const getAppointments = async (req, res) => {
   }
 };
 
-module.exports = { createAppointment,getAppointments };
+module.exports = { createAppointment, getAppointments };

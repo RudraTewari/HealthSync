@@ -1,41 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import UserDropdown from "../UserProfile/UserDropdown";
 
 const Appointments = () => {
-  const [pendingAppointments, setPendingAppointments] = useState([]);
-  const [confirmedAppointments, setConfirmedAppointments] = useState([]);
   const [form, setForm] = useState({
     patientName: "",
     date: "",
     time: "",
     symptoms: "",
   });
+
   const [userDropdown, setUserDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
-  // Utility: fetch appointments by status for this patient
-  const fetchByStatus = async (status, setter) => {
-    if (!form.patientName) return; // only fetch if patient name is filled
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/appointments?status=${status}&patientName=${form.patientName}`
-      );
-      const data = await res.json();
-      setter(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Error fetching appointments:", err);
-    }
-  };
-
-  // Fetch appointments whenever patientName changes
-  useEffect(() => {
-    if (form.patientName) {
-      fetchByStatus("Pending", setPendingAppointments);
-      fetchByStatus("Confirmed", setConfirmedAppointments);
-    }
-  }, [form.patientName]);
+  // ✅ new states for fetching appointments
+  const [searchName, setSearchName] = useState("");
+  const [appointments, setAppointments] = useState([]);
 
   // Book appointment
   const handleBook = async (e) => {
@@ -55,23 +36,51 @@ const Appointments = () => {
       symptoms: form.symptoms,
     };
 
-    await fetch("http://localhost:5000/api/addappointments", {
+    await fetch("http://localhost:5000/api/patient/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAppt),
     });
 
     setForm({ ...form, date: "", time: "", symptoms: "" });
+    alert("Appointment booked successfully ✅");
+  };
 
-    // Refresh both lists
-    fetchByStatus("Pending", setPendingAppointments);
-    fetchByStatus("Confirmed", setConfirmedAppointments);
+  // ✅ Fetch appointments by patientName directly from admin backend
+  const handleFetchAppointments = async () => {
+    if (!searchName.trim()) {
+      alert("Enter a patient name first.");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/appointments?patientName=${encodeURIComponent(
+          searchName
+        )}`
+      );
+      const data = await res.json();
+
+      // ✅ Ensure only the needed fields are stored
+      const filteredData = data.map((app) => ({
+        doctor: app.doctor,
+        date: app.date,
+        time: app.time,
+        symptoms: app.symptoms,
+        status: app.status,
+      }));
+
+      setAppointments(filteredData);
+    } catch (err) {
+      console.error("Error fetching appointments:", err);
+    }
   };
 
   function toggleUserDropdown() {
     setUserDropdown((prev) => !prev);
   }
-  const toggleNotificationDropdown = () => setNotificationDropdown((prev) => !prev);
+  const toggleNotificationDropdown = () =>
+    setNotificationDropdown((prev) => !prev);
 
   return (
     <div className="flex min-h-screen bg-slate-800">
@@ -120,7 +129,7 @@ const Appointments = () => {
             </div>
 
             {/* Profile Dropdown */}
-            <UserDropdown /> {/* replaced hardcoded dropdown */}
+            <UserDropdown />
           </div>
         </div>
 
@@ -138,7 +147,9 @@ const Appointments = () => {
               required
               placeholder="Patient Name"
               value={form.patientName}
-              onChange={(e) => setForm({ ...form, patientName: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, patientName: e.target.value })
+              }
               className="p-2 rounded bg-slate-800 text-white flex-1"
             />
 
@@ -175,7 +186,6 @@ const Appointments = () => {
               </select>
             </div>
 
-
             <input
               type="text"
               required
@@ -187,90 +197,69 @@ const Appointments = () => {
 
             <button
               type="submit"
-              className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded transition"
+              className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition"
             >
               Book
             </button>
           </form>
         </div>
 
-        {/* Pending Appointments */}
-        <div className="mb-8">
-          <h2 className="text-xl font-bold text-pink-300 mb-4">
-            Pending Appointments
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {pendingAppointments.length === 0 && (
-              <p className="text-gray-300">No pending appointments.</p>
-            )}
-            {pendingAppointments.map((a) => (
-              <div
-                key={a._id}
-                className="bg-slate-700 p-4 rounded-xl shadow-md text-white flex items-center gap-4 transition hover:scale-105"
-              >
-                <div className="w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-pink-400">
-                  <i className="fa-solid fa-user-doctor text-white text-2xl"></i>
-                </div>
-                <div>
-                  <p className="font-semibold">Patient: {a.patientName}</p>
-                  <p>Symptoms: {a.symptoms}</p>
-                  <p>
-                    <i className="fa-solid fa-calendar text-white mr-2"></i>
-                    Date: {new Date(a.appointDate).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <i className="fa-solid fa-clock text-white mr-2"></i>
-                    Time:{" "}
-                    {new Date(a.appointDate).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* ✅ Show Appointments Section */}
+        <div className="bg-slate-900 p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-bold text-white mb-4">Show Appointments</h2>
 
-        {/* Confirmed Appointments */}
-        <div>
-          <h2 className="text-xl font-bold text-pink-300 mb-4">
-            Confirmed Appointments
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {confirmedAppointments.length === 0 && (
-              <p className="text-gray-300">No confirmed appointments.</p>
-            )}
-            {confirmedAppointments.map((a) => (
-              <div
-                key={a._id}
-                className="bg-slate-700 p-4 rounded-xl shadow-md text-white flex items-center gap-4 transition hover:scale-105"
-              >
-                <div className="w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-pink-400">
-                  <i className="fa-solid fa-user-doctor text-white text-2xl"></i>
-                </div>
-                <div>
-                  <p className="font-semibold">Patient: {a.patientName}</p>
-                  <p>Symptoms: {a.symptoms}</p>
-                  <p>
-                    <i className="fa-solid fa-calendar text-white mr-2"></i>
-                    Date: {new Date(a.appointDate).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <i className="fa-solid fa-clock text-white mr-2"></i>
-                    Time:{" "}
-                    {new Date(a.appointDate).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                  <p className="text-pink-300">
-                    Assigned Doctor: {a.doctorName || "Pending Assignment"}
-                  </p>
-                </div>
-              </div>
-            ))}
+          {/* Search bar */}
+          <div className="flex gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="Enter Patient Name"
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+              className="p-2 rounded bg-slate-800 text-white flex-1"
+            />
+            <button
+              onClick={handleFetchAppointments}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
+            >
+              Show
+            </button>
           </div>
+
+          {/* Table of appointments */}
+          {appointments.length > 0 ? (
+            <table className="table-auto w-full text-gray-300">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">Doctor</th>
+                  <th className="px-4 py-2">Date</th>
+                  <th className="px-4 py-2">Time</th>
+                  <th className="px-4 py-2">Symptoms</th>
+                  <th className="px-4 py-2">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((app, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="px-4 py-2">{app.doctor}</td>
+                    <td className="px-4 py-2">{app.date}</td>
+                    <td className="px-4 py-2">{app.time}</td>
+                    <td className="px-4 py-2">{app.symptoms}</td>
+                    <td
+                      className={`px-4 py-2 font-semibold ${
+                        app.status === "Confirmed"
+                          ? "text-green-400"
+                          : "text-yellow-400"
+                      }`}
+                    >
+                      {app.status}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-gray-400">No appointments found.</p>
+          )}
         </div>
       </div>
     </div>

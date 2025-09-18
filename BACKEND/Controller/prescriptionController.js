@@ -43,16 +43,38 @@ const createPrescription = async (req, res) => {
 
 const getPrescriptions = async (req, res) => {
   try {
-    const prescriptions = await Prescription.find().select(
-      "PatientName DoctorName PrescriptDate medicines"
+    const { patientName, date } = req.query;
+
+    let query = {};
+
+    // ✅ Apply patient name filter if provided
+    if (patientName) {
+      query.PatientName = { $regex: new RegExp(patientName, "i") };
+    }
+
+    // ✅ Apply date filter if provided
+    if (date) {
+      const start = new Date(date);
+      const end = new Date(date);
+      end.setDate(end.getDate() + 1);
+      query.PrescriptDate = { $gte: start, $lt: end };
+    }
+
+    const prescriptions = await Prescription.find(query).select(
+      "PatientName DoctorName PrescriptDate medicines diagnosis"
     );
+
+    if (!prescriptions || prescriptions.length === 0) {
+      return res.status(404).json({ message: "No prescriptions found." });
+    }
 
     const formattedPrescriptions = prescriptions.map((pres) => ({
       id: pres._id,
       patientName: pres.PatientName,
       doctorName: pres.DoctorName,
       date: pres.PrescriptDate ? new Date(pres.PrescriptDate).toLocaleDateString() : "",
-      medications: pres.medicines.map((med) => med.name), // Only medicine names
+      medications: pres.medicines.map((med) => med.name),
+      diagnosis: pres.diagnosis || ""
     }));
 
     res.json(formattedPrescriptions);
@@ -62,4 +84,4 @@ const getPrescriptions = async (req, res) => {
   }
 };
 
-module.exports = { createPrescription,getPrescriptions };
+module.exports = { createPrescription, getPrescriptions };

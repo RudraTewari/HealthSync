@@ -14,11 +14,12 @@ const Connection = require('./Database/db.js');
 // Routers
 const doctorRoutes = require('./Routes/doctorRoutes.js'); 
 const appointmentRoutes = require('./Routes/appointmentRoutes.js');
-const prescriptionRoutes = require('./Routes/prescriptionRoutes.js');
+const prescriptionRoutes = require('./Routes/prescriptionRoutes.js');   // ✅ Admin
 const invoiceRoutes = require("./Routes/invoiceRoutes.js");
 const documentRoutes = require("./Routes/documentRoutes.js");
-const patientAppointmentRoutes = require("./Routes/patientAppointmentRoutes.js");
 const authRouter = require('./Routes/authRoutes.js');
+const patientAppointmentRoutes = require("./Routes/patientAppointmentRoutes.js");
+const patientPrescriptionRoutes = require("./Routes/patientPrescriptionRoutes.js"); // ✅ User
 
 // Middleware
 app.use(cors({
@@ -31,11 +32,13 @@ app.use(cookieParser());
 // Use Routers
 app.use('/api', doctorRoutes);
 app.use('/api', appointmentRoutes); 
-app.use('/api', prescriptionRoutes);
+app.use('/api', prescriptionRoutes); // ✅ Admin prescriptions
 app.use('/api', invoiceRoutes);
 app.use('/api', documentRoutes);
-app.use('/api', patientAppointmentRoutes);
 app.use('/api/auth', authRouter);
+app.use("/api/patient", patientAppointmentRoutes);
+app.use("/api/prescriptions", patientPrescriptionRoutes);
+
 
 // Static folders
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

@@ -1,33 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
-import UserDropdown from '../UserProfile/UserDropdown'; // import your new dropdown
+import UserDropdown from '../UserProfile/UserDropdown';
 
 const Prescription = () => {
+  const [patientName, setPatientName] = useState('');
+  const [date, setDate] = useState('');
   const [prescriptions, setPrescriptions] = useState([]);
-  const [form, setForm] = useState({ medicine: '', dosage: '', doctor: '', date: '' });
-  const [doctorDropdown, setDoctorDropdown] = useState(false);
+  const [userDropdown, setUserDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
-  const doctorsList = [
-    { id: 1, name: 'Dr. Aditi Sharma', specialty: 'Cardiologist' },
-    { id: 2, name: 'Dr. Rohan Mehta', specialty: 'Dermatologist' },
-    { id: 3, name: 'Dr. Vikram Singh', specialty: 'Neurologist' },
-  ];
-
-  useEffect(() => {
-    const stored = localStorage.getItem('prescriptions');
-    if (stored) setPrescriptions(JSON.parse(stored));
-  }, []);
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    const updated = [...prescriptions, form];
-    setPrescriptions(updated);
-    localStorage.setItem('prescriptions', JSON.stringify(updated));
-    setForm({ medicine: '', dosage: '', doctor: '', date: '' });
-  };
-
+  const toggleUserDropdown = () => setUserDropdown(prev => !prev);
   const toggleNotificationDropdown = () => setNotificationDropdown(prev => !prev);
+
+  // ✅ Fetch prescriptions from backend
+  const handleFetchPrescriptions = async () => {
+    if (!patientName.trim() || !date) {
+      alert("Both patient name and date are required.");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/prescriptions?patientName=${encodeURIComponent(
+          patientName
+        )}&date=${encodeURIComponent(date)}`
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        alert(errorData.message || "Failed to fetch prescriptions.");
+        setPrescriptions([]);
+        return;
+      }
+
+      const data = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        alert("No prescriptions found for this patient on given date.");
+        setPrescriptions([]);
+        return;
+      }
+
+      const filteredData = data.map((p) => ({
+        doctor: p.doctor,
+        date: p.date,
+        medications: p.medications,
+        diagnosis: p.diagnosis || "",
+      }));
+
+      setPrescriptions(filteredData);
+    } catch (err) {
+      console.error("Error fetching prescriptions:", err);
+      alert("Error fetching prescriptions from server.");
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-slate-800">
@@ -40,8 +66,7 @@ const Prescription = () => {
             Prescriptions
           </div>
           <div className="flex items-center gap-4 relative">
-
-            {/* Notification Icon with dropdown */}
+            {/* Notifications */}
             <div className="relative">
               <div
                 className="cursor-pointer w-11 h-11 flex items-center justify-center bg-slate-900 hover:bg-gray-500 rounded-full transition"
@@ -67,96 +92,62 @@ const Prescription = () => {
             </div>
 
             {/* User Dropdown */}
-            <UserDropdown />  {/* Reusable dropdown component */}
+            <UserDropdown />
           </div>
         </div>
 
-        {/* Add Prescription Form */}
+        {/* Search Form */}
         <div className="bg-slate-900 p-6 rounded-xl shadow-md mb-8">
-          <h2 className="text-xl font-bold text-white mb-4">Add Prescription</h2>
-          <form onSubmit={handleAdd} className="flex flex-col md:flex-row gap-4 items-center">
-
+          <h2 className="text-xl font-bold text-white mb-4">Show Prescriptions</h2>
+          <div className="flex gap-4">
             <input
               type="text"
-              required
-              placeholder="Medicine Name"
+              placeholder="Patient Name"
+              value={patientName}
+              onChange={(e) => setPatientName(e.target.value)}
               className="p-2 rounded bg-slate-800 text-white flex-1"
-              value={form.medicine}
-              onChange={e => setForm({ ...form, medicine: e.target.value })}
             />
-
             <input
-              type="text"
-              required
-              placeholder="Dosage (e.g., 2 times a day)"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
               className="p-2 rounded bg-slate-800 text-white flex-1"
-              value={form.dosage}
-              onChange={e => setForm({ ...form, dosage: e.target.value })}
             />
-
-            <div className="relative flex-1">
-              <button
-                type="button"
-                className="w-full p-2 rounded bg-slate-800 text-white text-left flex justify-between items-center"
-                onClick={() => setDoctorDropdown(!doctorDropdown)}
-              >
-                {form.doctor || 'Select Doctor'}
-                <i className="fa-solid fa-angle-down text-white"></i>
-              </button>
-              {doctorDropdown && (
-                <div className="absolute mt-1 w-full bg-slate-700 text-white rounded shadow-lg z-50">
-                  {doctorsList.map((d) => (
-                    <div
-                      key={d.id}
-                      className="px-4 py-2 hover:bg-slate-600 cursor-pointer"
-                      onClick={() => { setForm({ ...form, doctor: `${d.name} (${d.specialty})` }); setDoctorDropdown(false); }}
-                    >
-                      {d.name} ({d.specialty})
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="relative flex-1">
-              <input
-                type="date"
-                required
-                className="p-2 pl-4 rounded bg-slate-800 text-white w-full"
-                value={form.date}
-                onChange={e => setForm({ ...form, date: e.target.value })}
-              />
-              <i
-                className="fa-solid fa-calendar text-white absolute right-3 top-2.5 cursor-pointer"
-                onClick={() => document.querySelector('input[type="date"]').showPicker()}
-              ></i>
-            </div>
-
-            <button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition">
-              Add
+            <button
+              onClick={handleFetchPrescriptions}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
+            >
+              Show
             </button>
-          </form>
+          </div>
         </div>
 
-        {/* View Prescriptions */}
-        <div>
-          <h2 className="text-xl font-bold text-white mb-4">My Prescriptions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {prescriptions.length === 0 && <p className="text-gray-300">No prescriptions added.</p>}
-            {prescriptions.map((p, idx) => (
-              <div key={idx} className="bg-slate-700 p-4 rounded-xl shadow-md text-white flex items-center gap-4 transition hover:scale-105">
-                <div className="w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-green-400">
-                  <i className="fa-solid fa-prescription-bottle-medical text-white text-2xl"></i>
-                </div>
-                <div>
-                  <p className="font-semibold">{p.medicine}</p>
-                  <p className="text-gray-300">Dosage: {p.dosage}</p>
-                  <p className="text-gray-300">Doctor: {p.doctor}</p>
-                  <p><i className="fa-solid fa-calendar text-white mr-2"></i>{p.date}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Display Prescriptions */}
+        <div className="bg-slate-900 p-6 rounded-xl shadow-md">
+          {prescriptions.length > 0 ? (
+            <table className="table-auto w-full text-gray-300">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">Doctor</th>
+                  <th className="px-4 py-2">Date</th>
+                  <th className="px-4 py-2">Medications</th>
+                  <th className="px-4 py-2">Diagnosis</th>
+                </tr>
+              </thead>
+              <tbody>
+                {prescriptions.map((p, idx) => (
+                  <tr key={idx} className="text-center">
+                    <td className="px-4 py-2">{p.doctor}</td>
+                    <td className="px-4 py-2">{p.date}</td>
+                    <td className="px-4 py-2">{p.medications.join(", ")}</td>
+                    <td className="px-4 py-2">{p.diagnosis}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-gray-400">No prescriptions found.</p>
+          )}
         </div>
 
       </div>
