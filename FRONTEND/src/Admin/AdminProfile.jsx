@@ -26,13 +26,13 @@ const AdminProfile = () => {
               </button>
               <button
                 onClick={handleLogout}
-                className="h-10 w-36 text-center bg-red-900 border-2 rounded-full hover:border-amber-100 hover:scale-110 duration-300 ease-in"
+                className="h-10 w-36 text-center border-2 rounded-full hover:border-amber-100 hover:bg-slate-900  hover:scale-110 duration-300 ease-in"
               >
-                <h2 className="text-[15px] text-white my-2 ">Logout</h2>
+                <h2 className="text-[15px] text-white font-bold hover:text-red-600 hover:font-bold my-2 ">Logout</h2>
               </button>
             </div>
 
-            <h1 className="text-[30px] text-gray-400 mt-6 ml-6 font-semibold">Admin Profile</h1>
+            <h1 className="text-[30px] text-gray-400 mt-6 ml-6 font-bold">Admin Profile</h1>
             <div className="col-span-6 bg-slate-950">
               <h1></h1>
             </div>

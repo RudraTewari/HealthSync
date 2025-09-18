@@ -87,7 +87,7 @@ const Body = () => {
               </NavLink>
         </div>
 
-        <h1 className=' text-[30px] text-gray-300 mt-10 mx-7 font-semibold'><i className='fas fa-home mr-2'></i> Dashboard</h1>
+        <h1 className=' text-[30px] text-gray-400 mt-10 mx-7 font-bold'><i className='fas fa-home mr-2'></i> Dashboard</h1>
 
         {/* BODY PART */}
 
