@@ -26,9 +26,9 @@ const AdminProfile = () => {
               </button>
               <button
                 onClick={handleLogout}
-                className="h-10 w-36 text-center border-2 rounded-full hover:border-amber-100 hover:bg-slate-900  hover:scale-110 duration-300 ease-in"
+                className="h-10 w-36 text-center border-2 rounded-xl border-red-600  hover:border-red-600  hover:bg-slate-900  hover:scale-105 duration-300 ease-in"
               >
-                <h2 className="text-[15px] text-white font-bold hover:text-red-600 hover:font-bold my-2 ">Logout</h2>
+                <h2 className="text-[16px] text-red-700 font-bold hover:font-bold hover:text-red-600 py-2 ">Logout</h2>
               </button>
             </div>
 
