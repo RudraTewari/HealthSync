@@ -30,6 +30,7 @@ import Prescription from './Patient/Prescription/Prescription';
 import Insurance from './Patient/Insurance/Insurance';
 import BillingPayment from './Patient/BillingPayement/BillingPayment';
 import LabRecord from './Patient/LabRecord/LabRecord';
+import UserProfile from './Patient/UserProfile/UserProfile';
 
 // Auth Pages
 import Login from './Authentication/Login';
@@ -140,7 +141,10 @@ function App() {
           path="/user/Insurance"
           element={<ProtectedRoute allowedRole="patient"><Insurance /></ProtectedRoute>}
         />
-        {/* no /user/profile */}
+        <Route
+          path="/user/UserProfile"
+          element={<ProtectedRoute allowedRole="patient"><UserProfile /></ProtectedRoute>}
+        />        
 
         {/* Admin Routes (restored original link style) */}
         <Route

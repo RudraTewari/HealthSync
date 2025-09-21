@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getLoggedInUser } from "../../Authentication/api.js"; // ✅ use axios api
 import { useNavigate } from "react-router-dom";
+import UserProfile from "./UserProfile.jsx";
 
 const UserDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -52,6 +53,13 @@ const UserDropdown = () => {
       {/* Dropdown menu */}
       {dropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-slate-800 text-white rounded-xl shadow-2xl overflow-hidden z-50 border border-slate-700">
+          <NavLink to="/user/UserProfile">
+          <button            
+            className="w-full text-left px-4 py-3 transition-colors duration-200 font-semibold bg-slate-800 hover:bg-slate-700 hover:text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-600"
+          >
+            View Profile            
+          </button>
+          </NavLink>
           {/* Logout */}
           <button
             onClick={handleLogout}

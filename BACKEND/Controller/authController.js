@@ -247,9 +247,9 @@ const getLoggedInUser = async (req, res) => {
     const user = await userModel.findById(req.user._id).select("-password");
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    if (user.role !== "patient") {
-      return res.status(403).json({ success: false, message: "Access denied: not a patient" });
-    }
+    // if (user.role !== "patient") {
+    //   return res.status(403).json({ success: false, message: "Access denied: not a patient" });
+    // }
 
     return res.json({ success: true, user });
   } catch (error) {
