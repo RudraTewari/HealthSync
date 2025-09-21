@@ -80,13 +80,13 @@ const Insurance = () => {
         </div>
 
         {/* Category Filter */}
-        <div className="flex gap-4 mb-6">
+        <div className="flex gap-4 mb-6 ml-1">
           {["All", "Health", "Life"].map((c) => (
             <button
               key={c}
               onClick={() => setCategory(c)}
-              className={`px-4 py-2 rounded ${
-                category === c ? "bg-pink-500 text-white" : "bg-slate-700 text-white hover:bg-slate-600"
+              className={`px-4 py-2 rounded font-semibold ${
+                category === c ? "bg-blue-500 text-white" : "bg-slate-700 text-white hover:bg-slate-600"
               }`}
             >
               {c}
@@ -102,16 +102,16 @@ const Insurance = () => {
               className="bg-slate-900 p-6 rounded-xl shadow-md flex flex-col gap-4 hover:scale-105 transition"
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-bold flex items-center gap-2 text-white">
-                  <i className="fa-solid fa-shield-heart text-pink-400"></i> {plan.name}
+                <h3 className="text-xl font-bold flex items-center gap-2 text-blue-300">
+                  {plan.name}
                 </h3>
-                <span className="px-2 py-1 rounded-full bg-blue-600 text-white">{plan.type}</span>
+                <span className="px-2 py-1 rounded bg-slate-700 text-cyan-300 font-semibold">{plan.type}</span>
               </div>
               <p className="text-white">Coverage: {plan.coverage}</p>
               <p className="text-white">Premium: {plan.premium}</p>
               <button
                 onClick={() => buyPlan(plan)}
-                className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded transition w-max text-white"
+                className="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded transition w-max text-white"
               >
                 Buy Plan
               </button>
@@ -121,14 +121,14 @@ const Insurance = () => {
 
         {/* Purchased Plans */}
         <div className="mt-6">
-          <h2 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
-            <i className="fa-solid fa-check-circle text-green-400"></i> Purchased Plans
+          <h2 className="text-xl font-bold mb-4 ml-1 text-white flex items-center gap-2">
+           Purchased Plans
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {purchasedPlans.length === 0 && <p className="text-gray-300">No plans purchased yet.</p>}
+            {purchasedPlans.length === 0 && <p className="text-gray-400 ml-1">No plans purchased yet.</p>}
             {purchasedPlans.map((plan) => (
-              <div key={plan.id} className="bg-slate-700 p-4 rounded-xl shadow-md flex flex-col gap-2">
-                <p className="font-bold text-lg text-white">{plan.name}</p>
+              <div key={plan.id} className="bg-slate-900 p-5 rounded-xl shadow-md flex flex-col gap-2">
+                <p className="font-bold pb-0.5 text-lg text-blue-300">{plan.name}</p>
                 <p className="text-white">Type: {plan.type}</p>
                 <p className="text-white">Coverage: {plan.coverage}</p>
                 <p className="text-white">Premium: {plan.premium}</p>
