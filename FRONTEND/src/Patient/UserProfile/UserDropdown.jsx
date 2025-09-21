@@ -1,15 +1,41 @@
 // src/Patient/UserProfile/UserDropdown.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { getLoggedInUser } from "../../Authentication/api.js"; // ✅ use axios api
 import { useNavigate } from "react-router-dom";
 
 const UserDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
+
+// ------------------ Fetch logged-in user ------------------
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data } = await getLoggedInUser();
+        if (data.success) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (err) {
+        console.error("❌ Error fetching user:", err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <div className="relative">
@@ -19,7 +45,7 @@ const UserDropdown = () => {
         className="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl cursor-pointer transition-shadow shadow-lg"
       >
         <i className="fa-solid fa-user"></i>
-        <span className="hidden sm:block">User</span>
+        <span className="hidden sm:block">{user && user.name ? user.name : "User"}</span>
         <i className={`fa-solid fa-angle-${dropdownOpen ? "up" : "down"}`}></i>
       </div>
 

@@ -11,4 +11,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+
+  // ✅ ADD THIS SERVER CONFIGURATION BLOCK
+  server: {
+    proxy: {
+      // Proxies any request starting with /api to your backend server
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true, // Recommended for this setup
+      },
+    },
+  },
 })

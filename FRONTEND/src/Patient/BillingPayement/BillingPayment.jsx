@@ -94,7 +94,7 @@ const BillingPayment = () => {
             </div>
 
             {/* Profile Dropdown */}
-            <UserDropdown /> {/* replaced hardcoded dropdown */}
+            <UserDropdown /> 
           </div>
         </div>
 
@@ -159,21 +159,7 @@ const BillingPayment = () => {
           ))}
         </div>
 
-        {/* Add Mock Bills Section */}
-        <div className="bg-slate-900 p-6 rounded-xl shadow-md mt-6">
-          <h2 className="text-xl font-bold mb-4 text-white">Add Mock Bills</h2>
-          <div className="flex flex-wrap gap-3">
-            {billCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => addMockBill(cat)}
-                className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white transition"
-              >
-                Add {cat} Fee
-              </button>
-            ))}
-          </div>
-        </div>
+        
       </div>
     </div>
   );

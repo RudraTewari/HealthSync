@@ -19,7 +19,7 @@ const Sidebar = () => {
         <li><NavLink to="/user" end className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Dashboard</NavLink></li>
         <li><NavLink to="/user/Appointment" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Appointments</NavLink></li>
         <li><NavLink to="/user/Prescription" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Prescriptions</NavLink></li>
-        <li><NavLink to="/user/LabReport" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Lab Records</NavLink></li>
+        <li><NavLink to="/user/LabReport" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Health Records</NavLink></li>
         <li><NavLink to="/user/BillingPayment" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Billing & Payment</NavLink></li>
         <li><NavLink to="/user/Insurance" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>Insurance</NavLink></li>  
       </ul>

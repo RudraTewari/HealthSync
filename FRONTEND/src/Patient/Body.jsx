@@ -1,25 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import UserDropdown from './UserProfile/UserDropdown'; // import the new dropdown
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import UserDropdown from "./UserProfile/UserDropdown";
+import { getLoggedInUser } from "../Authentication/api.js"; // ✅ use axios api
 
 const Body = () => {
-  // Mock summary data for preview in dashboard cards
-  const [upcomingAppointments, setUpcomingAppointments] = useState([
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // ------------------ Mock dashboard data (replace later with API) ------------------
+  const [upcomingAppointments] = useState([
     { id: 1, doctor: "Dr. Vikram Singh", date: "2025-08-20", time: "11:00 AM" },
   ]);
-  const [latestPrescription, setLatestPrescription] = useState({
-    medicine: "Paracetamol 500mg",
+  const [latestPrescription] = useState({
+    medicine: "Paracetamol 20mg",
     prescribedBy: "Dr. Rohan Mehta",
     date: "2025-07-30",
   });
-  const [latestLabReport, setLatestLabReport] = useState({
+  const [latestLabReport] = useState({
     testName: "Blood Sugar",
     resultDate: "2025-07-25",
     status: "Normal",
   });
-  const [pendingBillsCount, setPendingBillsCount] = useState(2);
-  const [activeInsurancePlansCount, setActiveInsurancePlansCount] = useState(1);
+  const [pendingBillsCount] = useState(2);
+  const [activeInsurancePlansCount] = useState(1);
+
+  // ------------------ Fetch logged-in user ------------------
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data } = await getLoggedInUser();
+        if (data.success) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (err) {
+        console.error("❌ Error fetching user:", err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-slate-800">
@@ -29,7 +54,9 @@ const Body = () => {
         <div className="flex justify-between items-center h-20 bg-slate-900 px-6 mb-6 shadow-lg rounded-xl">
           <div className="font-bold text-3xl bg-gradient-to-r from-blue-300 to-pink-500 text-transparent bg-clip-text flex gap-3">
             <h6>Welcome</h6>
-            <span className="font-bold text-gray-300">User</span>
+            <span className="font-bold text-gray-300">
+              {loading ? "..." : user ? user.name : "User"}
+            </span>
           </div>
 
           <div className="flex items-center gap-4 relative">
@@ -42,7 +69,7 @@ const Body = () => {
             </div>
 
             {/* Profile Dropdown */}
-            <UserDropdown /> {/* replaced hardcoded dropdown */}
+            <UserDropdown />
           </div>
         </div>
 
@@ -54,35 +81,47 @@ const Body = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-pink-400 rounded-full mt-2"></div>
         </div>
 
-        {/* Dashboard Cards with previews */}
+        {/* Dashboard Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-24">
           {/* Appointments */}
-          <NavLink to="/user/Appointment" className="transform hover:scale-105 transition">
+          <NavLink
+            to="/user/Appointment"
+            className="transform hover:scale-105 transition"
+          >
             <div className="bg-slate-900 p-6 rounded-xl text-white border border-slate-700 hover:border-pink-400 shadow-md hover:shadow-xl transition">
               <div className="text-3xl mb-2 text-pink-400">
-                <i className="fa-solid fa-calendar-check"></i>
+                <i className="fa-solid fa-user-md"></i>
               </div>
               <h2 className="text-xl font-bold">Appointments</h2>
               {upcomingAppointments.length > 0 ? (
                 <p className="mt-2 text-sm">
-                  Next: {upcomingAppointments[0].date} at {upcomingAppointments[0].time} with {upcomingAppointments[0].doctor}
+                  Next: {upcomingAppointments[0].date} at{" "}
+                  {upcomingAppointments[0].time} with{" "}
+                  {upcomingAppointments[0].doctor}
                 </p>
               ) : (
-                <p className="mt-2 text-sm text-gray-400">No upcoming appointments</p>
+                <p className="mt-2 text-sm text-gray-400">
+                  No upcoming appointments
+                </p>
               )}
             </div>
           </NavLink>
 
           {/* Prescriptions */}
-          <NavLink to="/user/Prescription" className="transform hover:scale-105 transition">
+          <NavLink
+            to="/user/Prescription"
+            className="transform hover:scale-105 transition"
+          >
             <div className="bg-slate-900 p-6 rounded-xl text-white border border-slate-700 hover:border-green-400 shadow-md hover:shadow-xl transition">
               <div className="text-3xl mb-2 text-green-400">
-                <i className="fa-solid fa-prescription-bottle-medical"></i>
+                <i className="fa-solid fa-file-prescription"></i>
               </div>
               <h2 className="text-xl font-bold">Prescriptions</h2>
               {latestPrescription ? (
                 <p className="mt-2 text-sm">
-                  Latest: {latestPrescription.medicine} prescribed by {latestPrescription.prescribedBy} on {latestPrescription.date}
+                  Latest: {latestPrescription.medicine} prescribed by{" "}
+                  {latestPrescription.prescribedBy} on{" "}
+                  {latestPrescription.date}
                 </p>
               ) : (
                 <p className="mt-2 text-sm text-gray-400">No prescriptions</p>
@@ -91,41 +130,59 @@ const Body = () => {
           </NavLink>
 
           {/* Lab Records */}
-          <NavLink to="/user/LabReport" className="transform hover:scale-105 transition">
+          <NavLink
+            to="/user/LabReport"
+            className="transform hover:scale-105 transition"
+          >
             <div className="bg-slate-900 p-6 rounded-xl text-white border border-slate-700 hover:border-yellow-400 shadow-md hover:shadow-xl transition">
               <div className="text-3xl mb-2 text-yellow-400">
-                <i className="fa-solid fa-vials"></i>
+                <i className="fa-solid fa-notes-medical"></i>
               </div>
-              <h2 className="text-xl font-bold">Lab Records</h2>
+              <h2 className="text-xl font-bold">Health Records</h2>
               {latestLabReport ? (
                 <p className="mt-2 text-sm">
-                  Last test: {latestLabReport.testName} - {latestLabReport.status} ({latestLabReport.resultDate})
+                  Last test: {latestLabReport.testName} -{" "}
+                  {latestLabReport.status} ({latestLabReport.resultDate})
                 </p>
               ) : (
-                <p className="mt-2 text-sm text-gray-400">No recent lab records</p>
+                <p className="mt-2 text-sm text-gray-400">
+                  No recent lab records
+                </p>
               )}
             </div>
           </NavLink>
 
           {/* Billing & Payment */}
-          <NavLink to="/user/BillingPayment" className="transform hover:scale-105 transition">
+          <NavLink
+            to="/user/BillingPayment"
+            className="transform hover:scale-105 transition"
+          >
             <div className="bg-slate-900 p-6 rounded-xl text-white border border-slate-700 hover:border-purple-400 shadow-md hover:shadow-xl transition">
               <div className="text-3xl mb-2 text-purple-400">
                 <i className="fa-solid fa-file-invoice-dollar"></i>
               </div>
               <h2 className="text-xl font-bold">Billing & Payment</h2>
-              <p className="mt-2 text-sm">{pendingBillsCount} pending bill{pendingBillsCount !== 1 ? "s" : ""}</p>
+              <p className="mt-2 text-sm">
+                {pendingBillsCount} pending bill
+                {pendingBillsCount !== 1 ? "s" : ""}
+              </p>
             </div>
           </NavLink>
 
           {/* Insurance */}
-          <NavLink to="/user/Insurance" className="transform hover:scale-105 transition">
+          <NavLink
+            to="/user/Insurance"
+            className="transform hover:scale-105 transition"
+          >
             <div className="bg-slate-900 p-6 rounded-xl text-white border border-slate-700 hover:border-cyan-400 shadow-md hover:shadow-xl transition">
               <div className="text-3xl mb-2 text-cyan-400">
                 <i className="fa-solid fa-shield-heart"></i>
               </div>
               <h2 className="text-xl font-bold">Insurance</h2>
-              <p className="mt-2 text-sm">{activeInsurancePlansCount} active plan{activeInsurancePlansCount !== 1 ? "s" : ""}</p>
+              <p className="mt-2 text-sm">
+                {activeInsurancePlansCount} active plan
+                {activeInsurancePlansCount !== 1 ? "s" : ""}
+              </p>
             </div>
           </NavLink>
         </div>

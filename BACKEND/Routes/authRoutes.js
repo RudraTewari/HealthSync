@@ -6,9 +6,10 @@ const {
   resendOtp,
   userLogout,
   sendResetOtp,
-  resetPassword
+  resetPassword,
+  getLoggedInUser
 } = require('../Controller/authController.js');
-const userAuth = require('../Middleware/authUser.js');
+const authUser = require('../Middleware/authUser.js');
 
 const router = express.Router();
 
@@ -26,5 +27,8 @@ router.post('/logout', userLogout);
 // ---------------- PASSWORD RESET ----------------
 router.post('/send-reset-otp', sendResetOtp);
 router.post('/reset-password', resetPassword);
+
+// ---------------- PROTECTED ROUTE ----------------
+router.get("/me", authUser, getLoggedInUser);
 
 module.exports = router;

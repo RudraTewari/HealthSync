@@ -77,7 +77,8 @@ const userRegistration = async (req, res) => {
             httpOnly: true,
             secure: false,
             sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            path: '/',
         });
 
         const otp = String(Math.floor(100000 + Math.random() * 900000));
@@ -133,7 +134,7 @@ const userLogin = async (req, res) => {
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 7*24*60*60*1000 });
+        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 7*24*60*60*1000, path: '/'});
 
         return res.json({ success: true, message: "Logged in successfully", role: user.role, isAccountVerified: user.isAccountVerified });
     } catch (error) {
@@ -144,7 +145,7 @@ const userLogin = async (req, res) => {
 // ---------------- LOGOUT ----------------
 const userLogout = async (req, res) => {
     try {
-        res.clearCookie("token", { httpOnly: true, secure: false, sameSite: "strict" });
+        res.clearCookie("token", { httpOnly: true, secure: false, sameSite: "strict", path: '/' });
         return res.json({ success: true, message: "Logged out successfully" });
     } catch (error) {
         return res.json({ success: false, message: error.message });
@@ -240,6 +241,22 @@ const resetPassword = async (req,res) => {
     } catch (error) { return res.json({ success:false,message:error.message }); }
 };
 
+// ---------------- GET LOGGED-IN USER ----------------
+const getLoggedInUser = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user._id).select("-password");
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+    if (user.role !== "patient") {
+      return res.status(403).json({ success: false, message: "Access denied: not a patient" });
+    }
+
+    return res.json({ success: true, user });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = { 
     userRegistration, 
     userLogin, 
@@ -247,5 +264,6 @@ module.exports = {
     verifyEmail, 
     resendOtp, 
     sendResetOtp, 
-    resetPassword 
+    resetPassword,
+    getLoggedInUser
 };
